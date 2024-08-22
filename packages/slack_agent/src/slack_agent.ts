@@ -5,10 +5,12 @@ export const slackAgent: AgentFunction = async ({ params, namedInputs }) => {
   const token = process.env.SLACK_TOKEN ?? namedInputs.slack_token;
   const channel = params.post_channel;
 
+  const message = namedInputs.message ?? params.message;
+  const text = Array.isArray(message) ? message.join("\n") : message;
   const web = new WebClient(token);
 
-  const result = await web.chat.postMessage({
-    text: "Hello amateraru from GraphAI Slack agent!",
+  await web.chat.postMessage({
+    text,
     channel,
   });
   return {};
