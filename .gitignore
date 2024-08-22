@@ -1,0 +1,5 @@
+# emacs
+*~
+
+node_modules
+packages/*/lib
