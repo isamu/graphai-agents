@@ -23,6 +23,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@receptron/test_utils": "^0.0.7",
     "@types/node": "^22.5.0",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
