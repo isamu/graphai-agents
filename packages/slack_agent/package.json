@@ -10,6 +10,7 @@
     "build": "tsc",
     "eslint": "eslint src --fix",
     "format": "prettier --write '{src,tests}/**/*.ts'",
+    "doc": "npx agentdoc",
     "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
     "test_graph": "node --test --require ts-node/register ./tests/run_graph.ts",
     "test": "node --test --require ts-node/register ./tests/test_*.ts",
