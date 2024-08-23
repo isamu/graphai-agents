@@ -2,7 +2,10 @@
   "name": "agent_template",
   "version": "0.0.1",
   "description": "",
-  "main": "src/index.js",
+  "main": "lib/index.js",
+  "files": [
+    "./lib"
+  ],
   "scripts": {
     "build": "tsc",
     "eslint": "eslint src --fix",

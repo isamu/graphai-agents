@@ -1,8 +1,11 @@
 {
-  "name": "slack_agent",
+  "name": "@graphai/slack_agent",
   "version": "0.0.1",
-  "description": "",
-  "main": "src/index.js",
+  "description": "Slack message agents for GraphAI.",
+  "main": "lib/index.js",
+  "files": [
+    "./lib"
+  ],
   "scripts": {
     "build": "tsc",
     "eslint": "eslint src --fix",
@@ -13,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/isamu/ts-mono.git"
+    "url": "git+https://github.com/isamu/graphai-agents.git"
   },
-  "author": "",
+  "author": "Isamu Arimoto",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/isamu/ts-mono/issues"
+    "url": "https://github.com/isamu/graphai-agents/issues"
   },
-  "homepage": "https://github.com/isamu/ts-mono#readme",
+  "homepage": "https://github.com/isamu/graphai-agents#readme",
   "devDependencies": {},
   "dependencies": {
     "@slack/web-api": "^7.3.4",
