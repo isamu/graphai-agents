@@ -5,6 +5,13 @@ export const slackAgent: AgentFunction = async ({ params, namedInputs }) => {
   const token = process.env.SLACK_TOKEN ?? namedInputs.slack_token;
   const channel = params.post_channel;
 
+  if (!token) {
+    throw new Error("SLACK_TOKEN is not set in environment variables.");
+  }
+  if (!channel) {
+    throw new Error("Slacl post_channel is not set in params.");
+  }
+
   const message = namedInputs.message ?? params.message;
   const text = Array.isArray(message) ? message.join("\n") : message;
   const web = new WebClient(token);
