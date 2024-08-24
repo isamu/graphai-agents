@@ -1,0 +1,30 @@
+{
+  "name": "@graphai/notion_agent",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "./lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "eslint": "eslint src --fix",
+    "format": "prettier --write '{src,tests}/**/*.ts'",
+    "doc": "npx agentdoc",
+    "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
+    "test": "node --test --require ts-node/register ./tests/test_*.ts",
+    "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isamu/graphai-agents.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isamu/graphai-agents/issues"
+  },
+  "homepage": "https://github.com/isamu/graphai-agents#readme",
+  "devDependencies": {},
+  "dependencies": {}
+}

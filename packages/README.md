@@ -7,16 +7,16 @@ GraphAI Agentを作るためのテンプレートです。
 agent_templateコピーする。名前は{name}_agent
 
 ```
-cp -r agent_template notion_agent
+cp -r agent_template {name}_agent
 ```
 
 ### package.jsonの変更
 
 nameを変更。このnameは、npmとして公開時の名前になるので、npmでユニークな名前とする。
-複数公開する場合はnpmでorganizationアカウントを取得して@organization/name とする。
+複数公開する場合はnpmでorganizationアカウントを取得して@organization/name とするのがよい。
 
 ```
-  "name": "@graphai/agent_template",
+  "name": "@{org}/{name}_agent",
 ```
 
 ### ファイル名の変更
