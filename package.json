@@ -23,7 +23,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@receptron/agentdoc": "^0.0.1",
+    "@receptron/agentdoc": "^0.0.3",
     "@receptron/test_utils": "^0.0.7",
     "@types/node": "^22.5.0",
     "eslint": "^9.9.0",

@@ -104,10 +104,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@receptron/agentdoc@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@receptron/agentdoc/-/agentdoc-0.0.1.tgz#d01e60b575e8a2779fb285486b88743bc98551c8"
-  integrity sha512-84LY5vrMM94SaA6Nr+rEcTflyqX/Ngwp5NPukBgYbcXskx6JbBDpnn8hnLRRfVnRRJl6nqxJ9kpmZgD4X72RYQ==
+"@receptron/agentdoc@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@receptron/agentdoc/-/agentdoc-0.0.3.tgz#a14977149e4acc411e9b71ee20a9a32aea5148d2"
+  integrity sha512-k1wPtChzww+qlwTXNtVi+s7hwRqrtigsVr+0/G9zl4cvq5Azrb14cQrJi/RtP9xVMuzCcYfJiwgj5gA86ulALA==
 
 "@receptron/test_utils@^0.0.7":
   version "0.0.7"

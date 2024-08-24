@@ -1,14 +1,3 @@
-
-# @graphai/slack_agent for GraphAI
-
-Slack message agents for GraphAI.
-
-### Install
-
-```sh
-yarn add @graphai/slack_agent
-```
-
 ## setup
 
 ### Acquiring a Slack Token for Posting Messages
@@ -26,18 +15,3 @@ yarn add @graphai/slack_agent
 
 3. **Using a Bot Token:**
    - If you are using a bot token, ensure that the bot is added to the channel where you intend to post messages. This can be done from the Slack app by inviting the bot to the relevant channel.
-
-### Usage
-
-```typescript
-import { GraphAI } from "graphai";
-import { slackAgent } from "@graphai/slack_agent";
-
-const agents = { slackAgent };
-
-const graph = new GraphAI(graph_data, agents);
-const result = await graph.run();
-```
-
-
-
