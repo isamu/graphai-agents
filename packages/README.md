@@ -1,6 +1,8 @@
+# このレポジトリについて
+
 GraphAI Agentを作るためのテンプレートです。
 
-- テンプレートをコピー
+### テンプレートをコピー
 
 agent_templateコピーする。名前は{name}_agent
 
@@ -8,7 +10,7 @@ agent_templateコピーする。名前は{name}_agent
 cp -r agent_template notion_agent
 ```
 
-- package.jsonの変更
+### package.jsonの変更
 
 nameを変更。このnameは、npmとして公開時の名前になるので、npmでユニークな名前とする。
 複数公開する場合はnpmでorganizationアカウントを取得して@organization/name とする。
@@ -17,15 +19,17 @@ nameを変更。このnameは、npmとして公開時の名前になるので、
   "name": "@graphai/agent_template",
 ```
 
-- ファイル名の変更
+### 各ファイル名の変更
 
-Agentのファイル名を変える。
+templateからagentのファイル名に変更する
 
 ```
 mv src/template_agent.ts src/{name}_agent.ts
 ```
 
-# ファイルの中身変更
+### ファイルの中身変更
+
+import時のファイル名と関数名を変更する。変更する対象は
 
 - src/index.ts
 - src/{name}_agent.ts
@@ -33,14 +37,16 @@ mv src/template_agent.ts src/{name}_agent.ts
 
 template_agentを{name}_agentに置換。
 
-# url等の変更（必要なら)
+### url等のAgentの情報の変更（必要なら)
 
 - package.json
+  - パッケージの情報
+  - レポジトリやissueのurl
+  - 作者の情報
 - src/{name}_agent.ts
+  - agentの情報の変更(AgentInfo)
 
-内のagentの情報を変更
-
-# テスト
+### テスト
 
 - unit testを実行する
 ```
