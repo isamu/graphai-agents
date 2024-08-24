@@ -14,9 +14,8 @@ yarn add @graphai/slack_agent
 ### Acquiring a Slack Token for Posting Messages
 
 1. **Obtain a Slack Token:**
-   - Navigate to the [Slack API Developer Portal](https://api.slack.com/apps) and select your app.
-   - Go to the **OAuth & Permissions** section.
-   - Under the **OAuth Tokens for Your Workspace** section, you will find the token. This token is necessary to post messages.
+   - Go to the [Slack API Developer Portal](https://api.slack.com/apps) and select or create your app.
+   - Follow the steps in the **Permissions** or **Authentication** section to generate the necessary token for your use case (e.g., user token, bot token).
 
 2. **Set the Token as an Environment Variable:**
    - Export the token as an environment variable by running the following command in your terminal:
