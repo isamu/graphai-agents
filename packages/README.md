@@ -57,14 +57,27 @@ yarn run test
 上記ファイルの変更などに問題なければテストが通る。
 importの変更や、変数の書き換え不足があればエラーになるので、修正する
 
+### Gitへ追加
+
+テストが通ったタイミングでgit add する
+
+{name}_templateディレクトリで
+```
+git add .
+```
+
+* node_modules, *~ はignoreされる
+
+(build後、必要ならlib以下も追加)
+
 # 実装
 
 `src/{name}_agent.ts`にagentを実装する
 
 # test
 
-test_hello.tsはagentにinputs, namedInputs, paramsを直接渡して実行するtest unit
-test_agent_runner.tsは、AgentInfoのsample値を参照してtestを実行するtest runnerです。
+- test_hello.tsはagentにinputs, namedInputs, paramsを直接渡して実行するtest unit
+- test_agent_runner.tsは、AgentInfoのsample値を参照してtestを実行するtest runnerです。
 
 
 # document
