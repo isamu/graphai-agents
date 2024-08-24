@@ -19,7 +19,7 @@ nameを変更。このnameは、npmとして公開時の名前になるので、
   "name": "@graphai/agent_template",
 ```
 
-### 各ファイル名の変更
+### ファイル名の変更
 
 templateからagentのファイル名に変更する
 
@@ -48,10 +48,12 @@ template_agentを{name}_agentに置換。
 
 ### テスト
 
-- unit testを実行する
+unit testを実行する。モックの状態でもテストが動くので、依存関係のテストのためにテストをする
+
 ```
 yarn run test
 ```
+
 上記ファイルの変更などに問題なければテストが通る。
 importの変更や、変数の書き換え不足があればエラーになるので、修正する
 
@@ -59,15 +61,16 @@ importの変更や、変数の書き換え不足があればエラーになる�
 
 `src/{name}_agent.ts`にagentを実装する
 
+# test
+
+test_hello.tsはagentにinputs, namedInputs, paramsを直接渡して実行するtest unit
+test_agent_runner.tsは、AgentInfoのsample値を参照してtestを実行するtest runnerです。
+
+
 # document
 
 ```
 yarn run doc
 ```
 でpackage.jsonの情報を使ってREADMEを自動生成する
-
-# test
-
-test_hello.tsはagentにinputs, namedInputs, paramsを直接渡して実行するtest unit
-test_agent_runner.tsは、AgentInfoのsample値を参照してtestを実行するtest runnerです。
 

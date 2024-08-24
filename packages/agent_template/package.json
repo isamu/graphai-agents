@@ -1,5 +1,5 @@
 {
-  "name": "agent_template",
+  "name": "@graphai/agent_template",
   "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",
