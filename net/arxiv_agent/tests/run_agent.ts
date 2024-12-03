@@ -3,9 +3,8 @@ import { AgentFunctionInfo, defaultTestContext } from "graphai";
 
 const run = async (agentInfo: AgentFunctionInfo) => {
   const { agent, samples, inputs: inputSchema } = agentInfo;
-  const ret = [];
-  for (const sampleKey of samples.keys()) {
-    const { params, inputs, result, graph } = samples[sampleKey];
+  const ret = await Promise.all(samples.map(async (sample) => {
+    const { params, inputs, result, graph } = sample;
     const flatInputs = Array.isArray(inputs) ? inputs : [];
     const namedInputs = Array.isArray(inputs) ? {} : inputs;
 
@@ -16,8 +15,8 @@ const run = async (agentInfo: AgentFunctionInfo) => {
       inputSchema,
       namedInputs,
     });
-    ret.push(actual);
-  }
+    return actual;
+  }));
   return ret;
 };
 
