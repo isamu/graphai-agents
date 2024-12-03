@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/isamu/ts-mono#readme",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "net/*"
   ],
   "devDependencies": {
     "@receptron/agentdoc": "^0.0.3",
