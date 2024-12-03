@@ -1,10 +1,7 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
 import search, { SearchApiType } from "arxiv-api-ts";
 
-export const arxivAgent: AgentFunction<SearchApiType> = async ({
-  params,
-  namedInputs,
-}) => {
+export const arxivAgent: AgentFunction<SearchApiType> = async ({ params, namedInputs }) => {
   const { searchQueryParams, sortBy, sortOrder, start, maxResults } = {
     ...params,
     ...namedInputs,
