@@ -27,6 +27,6 @@
   "homepage": "https://github.com/isamu/graphai-agents#readme",
   "devDependencies": {},
   "dependencies": {
-    "arxiv-api-ts": "^1.0.3"
+    "arxiv-api-ts": "^1.0.4"
   }
 }
