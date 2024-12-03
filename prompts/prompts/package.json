@@ -11,7 +11,7 @@
     "eslint": "eslint src --fix",
     "format": "prettier --write '{src,tests}/**/*.ts'",
     "doc": "npx agentdoc",
-    "create": "node scripts/conv.js",
+    "create": "node scripts/conv.js && yarn run format",
     "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
     "test": "node --test --require ts-node/register ./tests/test_*.ts",
     "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
