@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.arxivAgent = void 0;
 const arxiv_api_ts_1 = __importDefault(require("arxiv-api-ts"));
-const arxivAgent = async ({ params, namedInputs, }) => {
+const arxivAgent = async ({ params, namedInputs }) => {
     const { searchQueryParams, sortBy, sortOrder, start, maxResults } = {
         ...params,
         ...namedInputs,
