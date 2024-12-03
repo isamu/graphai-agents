@@ -1,5 +1,5 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
-import search, { SearchApiType } from "arXiv-api-ts";
+import search, { SearchApiType } from "arxiv-api-ts";
 
 export const arxivAgent: AgentFunction<SearchApiType> = async ({
   params,
