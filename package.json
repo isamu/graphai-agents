@@ -21,14 +21,16 @@
   "homepage": "https://github.com/isamu/ts-mono#readme",
   "workspaces": [
     "packages/*",
+    "prompts/*",
     "net/*"
   ],
   "devDependencies": {
+    "@graphai/vanilla": "^0.1.11",
     "@receptron/agentdoc": "^0.0.4",
     "@receptron/test_utils": "^0.0.8",
     "@types/node": "^22.10.1",
-    "graphai_agent_utils": "^0.0.1",
     "eslint": "^9.16.0",
+    "graphai_agent_utils": "^0.0.1",
     "prettier": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

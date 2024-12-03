@@ -72,6 +72,18 @@
   dependencies:
     levn "^0.4.1"
 
+"@graphai/agent_utils@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@graphai/agent_utils/-/agent_utils-0.0.3.tgz#95dff049247c4ad0da20443062654fb1826061f7"
+  integrity sha512-dybbO54rI9E1XfNaHhxLT9xES7G9KC2mXyDYaKvvcDF3bSF6/870CzQb3AOxqzy6WadkKPO+oFye85RM8uNaHg==
+
+"@graphai/vanilla@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.1.11.tgz#a4d261aba33ff0892fc0dd14460df0de19e80ae9"
+  integrity sha512-9CcmGpKKptcRAji+zpYaipZfdnG8o7PAijcrLWqZOTBd18/fT2CC8+vx3WRKmf//XIio2zr+pdAJPAg336s6ew==
+  dependencies:
+    "@graphai/agent_utils" "0.0.3"
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"
