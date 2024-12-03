@@ -1,15 +1,28 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
+import { data } from "./prompt";
 
-export const promptsAgent: AgentFunction = async ({ params, namedInputs }) => {
-  return { params, namedInputs };
+export const promptsAgent: AgentFunction<{promptKey:  keyof typeof data }> = async ({ params }) => {
+  const { promptKey } = params;
+  const prompt = data[promptKey];
+
+  return {
+    text: prompt
+  }
 };
 
 const promptsAgentInfo: AgentFunctionInfo = {
   name: "promptsAgent",
   agent: promptsAgent,
   mock: promptsAgent,
-
-  samples: [],
+  samples: [{
+    inputs: {},
+    params: {
+      promptKey: "test"
+    },
+    result: {
+      text: "this is test prompt.\n"
+    },
+  }],
   description: "Prompts Agent",
   category: ["prompt"],
   author: "Receptron team",

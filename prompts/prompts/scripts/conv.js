@@ -12,7 +12,7 @@ const main = () => {
     }
     
   });
-  console.log(ret);
+  // console.log(ret);
 
   fs.writeFileSync(
     "src/prompt.ts",
