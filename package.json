@@ -24,14 +24,14 @@
     "net/*"
   ],
   "devDependencies": {
-    "@receptron/agentdoc": "^0.0.3",
-    "@receptron/test_utils": "^0.0.7",
-    "@types/node": "^22.5.0",
-    "eslint": "^9.9.0",
-    "prettier": "^3.3.3",
+    "@receptron/agentdoc": "^0.0.4",
+    "@receptron/test_utils": "^0.0.8",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "prettier": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.2.0"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.17.0"
   }
 }
