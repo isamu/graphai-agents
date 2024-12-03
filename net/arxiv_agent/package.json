@@ -28,5 +28,9 @@
   "devDependencies": {},
   "dependencies": {
     "arxiv-api-ts": "^1.0.4"
+  },
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
   }
 }
