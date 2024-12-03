@@ -1,6 +1,6 @@
 import arxivAgent from "../src/arxiv_agent";
 import { GraphAI } from "graphai";
-  
+
 const main = async () => {
   const graphData = {
     version: 0.5,
@@ -17,7 +17,7 @@ const main = async () => {
           sortOrder: "descending",
           start: 0,
           maxResults: 100,
-        }
+        },
       },
     },
   };
@@ -25,6 +25,5 @@ const main = async () => {
   const result = await graph.run(true);
   console.log(result);
 };
-
 
 main();
