@@ -1,10 +1,5 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
-export declare const arxivAgent: AgentFunction<{
-    searchQueryParams: any;
-    sortBy: string;
-    sortOrder: string;
-    start: number;
-    maxResults: number;
-}>;
+import { SearchApiType } from "arxiv-api-ts";
+export declare const arxivAgent: AgentFunction<SearchApiType>;
 declare const arxivAgentInfo: AgentFunctionInfo;
 export default arxivAgentInfo;

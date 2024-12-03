@@ -29,7 +29,7 @@ const slackAgentInfo = {
     description: "Slack Agent",
     category: ["messaging"],
     author: "Receptron team",
-    repository: "https://github.com/receptron/graphai",
+    repository: "https://github.com/receptron/graphai-agents",
     license: "MIT",
 };
 exports.default = slackAgentInfo;
