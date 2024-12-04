@@ -1,0 +1,35 @@
+{
+  "name": "@graphai/samples_template",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "./lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "eslint": "eslint src --fix",
+    "format": "prettier --write '{src,tests}/**/*.ts'",
+    "doc": "npx agentdoc",
+    "run": "npx ts-node src/paper/paper.ts",
+    "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
+    "test": "node --test --require ts-node/register ./tests/test_*.ts",
+    "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isamu/graphai-agents.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isamu/graphai-agents/issues"
+  },
+  "homepage": "https://github.com/isamu/graphai-agents#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "@graphai/openai_agent": "^0.1.2",
+    "@graphai/pdf2text_agent": "^0.0.3",
+    "@graphai/vanilla_node_agents": "^0.1.0"
+  }
+}
