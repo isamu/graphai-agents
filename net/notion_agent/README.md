@@ -14,13 +14,27 @@ yarn add @graphai/notion_agent
 
 ```typescript
 import { GraphAI } from "graphai";
-import { templateAgent } from "@graphai/notion_agent";
+import { notionAgent } from "@graphai/notion_agent";
 
-const agents = { templateAgent };
+const agents = { notionAgent };
 
 const graph = new GraphAI(graph_data, agents);
 const result = await graph.run();
 ```
+
+### Agents description
+- notionAgent - Notion Agent
+
+### Input/Output/Params Schema & samples
+ - [notionAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/notion/notionAgent.md)
+
+
+
+
+
+
+
+
 
 
 

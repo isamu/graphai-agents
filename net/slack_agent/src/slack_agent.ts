@@ -27,7 +27,13 @@ const slackAgentInfo: AgentFunctionInfo = {
   name: "slackAgent",
   agent: slackAgent,
   mock: slackAgent,
-  samples: [],
+  samples: [{
+    inputs: { message: ["Hello amateraru from GraphAI Slack agent!"] },
+    params: {
+      post_channel: "#p_bootcamp_e_raycast_jp_amaterasu_dev",
+    },
+    result: {},
+  }],
   description: "Slack Agent",
   category: ["messaging"],
   author: "Receptron team",

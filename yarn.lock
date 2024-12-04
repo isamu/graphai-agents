@@ -196,10 +196,10 @@
     minimist "^1.2.5"
     unpdf "^0.12.1"
 
-"@receptron/agentdoc@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@receptron/agentdoc/-/agentdoc-0.0.4.tgz#620fca4d93605b08501188c95bd1607d1d0543a9"
-  integrity sha512-PHfJjh+S5EcuLyPF71NLeqEotUts6VsfXL03N3ZSa5bBXSiuZW7GEo4NSC7PuK9vBvoI3Eb1xinD2WPzwxIU1w==
+"@receptron/agentdoc@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@receptron/agentdoc/-/agentdoc-0.0.6.tgz#79bcb5f3ca1214501cea255a436cce717af648b0"
+  integrity sha512-P676DdkmRQPjTtjW5gvYrAojsn2aY+F8QbxQIc5CdNMRRvdkbVZViZqtFFhb/IY0tw/zyEauhI/u2y1XbnFj2g==
 
 "@receptron/test_utils@^0.0.8":
   version "0.0.8"

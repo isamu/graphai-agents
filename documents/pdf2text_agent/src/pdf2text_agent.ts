@@ -22,7 +22,11 @@ const pdf2textAgentInfo: AgentFunctionInfo = {
   name: "pdf2textAgent",
   agent: pdf2textAgent,
   mock: pdf2textAgent,
-  samples: [],
+  samples: [{
+    inputs: { buffer: Buffer.from("hellopdf")},
+    params: { type: "md" },
+    result: { test: "hello" },
+  }],
   description: "Pdf2text Agent",
   category: ["documents"],
   author: "Receptron team",

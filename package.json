@@ -6,6 +6,7 @@
     "test": "yarn workspaces run test",
     "build": "yarn workspaces run build",
     "eslint": "yarn workspaces run eslint",
+    "doc": "yarn workspaces run doc",
     "format": "yarn workspaces run format"
   },
   "private": true,
@@ -27,7 +28,7 @@
   ],
   "devDependencies": {
     "@graphai/vanilla": "^0.1.11",
-    "@receptron/agentdoc": "^0.0.4",
+    "@receptron/agentdoc": "^0.0.6",
     "@receptron/test_utils": "^0.0.8",
     "@types/node": "^22.10.1",
     "eslint": "^9.16.0",

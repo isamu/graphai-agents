@@ -38,6 +38,33 @@ const graph = new GraphAI(graph_data, agents);
 const result = await graph.run();
 ```
 
+### Agents description
+- slackAgent - Slack Agent
+
+### Input/Output/Params Schema & samples
+ - [slackAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/messaging/slackAgent.md)
+
+### Input/Params example
+ - slackAgent
+
+```typescript
+{
+  "inputs": {
+    "message": [
+      "Hello amateraru from GraphAI Slack agent!"
+    ]
+  },
+  "params": {
+    "post_channel": "#p_bootcamp_e_raycast_jp_amaterasu_dev"
+  }
+}
+```
+
+
+
+
+
+
 
 
 
