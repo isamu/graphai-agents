@@ -38,6 +38,6 @@ test("test pdf2textAgent: buffer, md", async () => {
   })) as any;
 
   if (res) {
-    console.log(res);
+    console.log(res.text);
   }
 });

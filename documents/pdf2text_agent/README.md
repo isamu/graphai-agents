@@ -14,9 +14,9 @@ yarn add @graphai/pdf2text_agent
 
 ```typescript
 import { GraphAI } from "graphai";
-import { templateAgent } from "@graphai/pdf2text_agent";
+import { pdf2textAgent } from "@graphai/pdf2text_agent";
 
-const agents = { templateAgent };
+const agents = { pdf2textAgent };
 
 const graph = new GraphAI(graph_data, agents);
 const result = await graph.run();
