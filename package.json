@@ -21,6 +21,7 @@
   "homepage": "https://github.com/isamu/ts-mono#readme",
   "workspaces": [
     "packages/*",
+    "documents/*",
     "prompts/*",
     "net/*"
   ],
