@@ -5,7 +5,6 @@ import { promptsAgent } from "@graphai/prompts";
 
 import "dotenv/config";
 
-
 import "@graphai/vanilla_node_agents";
 import { GraphAI } from "graphai";
 
@@ -21,7 +20,7 @@ const main = async () => {
       totext: {
         agent: "pdf2textAgent",
         inputs: {
-          buffer: ":file.array.$0"
+          buffer: ":file.array.$0",
         },
       },
       prompt: {
@@ -34,13 +33,13 @@ const main = async () => {
         agent: "openAIAgent",
         inputs: {
           system: ":prompt.text",
-          prompt: ":totext.text"
+          prompt: ":totext.text",
         },
       },
     },
   };
   const graph = new GraphAI(graphData, { pdf2textAgent, fileReadAgent, promptsAgent, openAIAgent });
-  const result = await graph.run(true) as any;
+  const result = (await graph.run(true)) as any;
   console.log(result.llm.text);
 };
 
