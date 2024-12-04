@@ -33,7 +33,7 @@
     "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
     "graphai_agent_utils": "^0.0.1",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2",

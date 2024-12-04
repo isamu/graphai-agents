@@ -30,6 +30,6 @@
   "dependencies": {
     "@graphai/openai_agent": "^0.1.2",
     "@graphai/pdf2text_agent": "^0.0.3",
-    "@graphai/vanilla_node_agents": "^0.1.0"
+    "@graphai/vanilla_node_agents": "^0.1.1"
   }
 }

@@ -29,7 +29,7 @@
   "devDependencies": {},
   "dependencies": {
     "@slack/web-api": "^7.3.4",
-    "dotenv": "^16.4.6",
+    "dotenv": "^16.4.7",
     "graphai": "^0.5.21"
   }
 }
