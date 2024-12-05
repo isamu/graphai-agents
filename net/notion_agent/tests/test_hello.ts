@@ -7,7 +7,7 @@ import assert from "node:assert";
 test("test notionAgent", async () => {
   const namedInputs = {};
   const params = {};
-  const res = (await notionAgent({ inputs: [], namedInputs, params, filterParams: {}, debugInfo: { verbose: false, nodeId: "test", retry: 5 } })) as any;
+  const res = (await notionAgent({ namedInputs, params, filterParams: {}, debugInfo: { verbose: false, nodeId: "test", retry: 5 } })) as any;
 
   if (res) {
     console.log(res);

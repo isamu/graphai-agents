@@ -27,7 +27,7 @@
     "net/*"
   ],
   "devDependencies": {
-    "@graphai/vanilla": "^0.1.11",
+    "@graphai/vanilla": "^0.2.0",
     "@receptron/agentdoc": "^0.0.6",
     "@receptron/test_utils": "^0.0.8",
     "@types/node": "^22.10.1",

@@ -28,8 +28,8 @@
   "homepage": "https://github.com/isamu/graphai-agents#readme",
   "devDependencies": {},
   "dependencies": {
-    "@graphai/openai_agent": "^0.1.2",
+    "@graphai/openai_agent": "^0.2.0",
     "@graphai/pdf2text_agent": "^0.0.3",
-    "@graphai/vanilla_node_agents": "^0.1.1"
+    "@graphai/vanilla_node_agents": "^0.2.0"
   }
 }
