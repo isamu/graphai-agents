@@ -2,7 +2,7 @@ import { AgentFunction, AgentFunctionInfo, assert } from "graphai";
 import pdf2md from "@opendocsg/pdf2md";
 import { extractText, getDocumentProxy } from "unpdf";
 
-export const pdf2textAgent: AgentFunction<{ type: string }, { text?: string }, null, { buffer: Buffer }> = async ({ params, namedInputs }) => {
+export const pdf2textAgent: AgentFunction<{ type: string }, { text?: string }, { buffer: Buffer }> = async ({ params, namedInputs }) => {
   const { buffer } = namedInputs;
   const { type } = params;
 

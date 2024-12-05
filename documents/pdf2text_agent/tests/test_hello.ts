@@ -11,7 +11,6 @@ test("test pdf2textAgent: buffer, text", async () => {
   const namedInputs = { buffer: pdfBuffer };
   const params = {};
   const res = (await pdf2textAgent.agent({
-    inputs: [],
     namedInputs,
     params,
     filterParams: {},
@@ -30,7 +29,6 @@ test("test pdf2textAgent: buffer, md", async () => {
   const namedInputs = { buffer: pdfBuffer };
   const params = { type: "md" };
   const res = (await pdf2textAgent.agent({
-    inputs: [],
     namedInputs,
     params,
     filterParams: {},
