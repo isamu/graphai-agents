@@ -27,9 +27,9 @@
     "net/*"
   ],
   "devDependencies": {
-    "@graphai/vanilla": "^0.2.0",
+    "@graphai/vanilla": "^0.2.2",
     "@receptron/agentdoc": "^0.0.6",
-    "@receptron/test_utils": "^0.0.8",
+    "@receptron/test_utils": "^0.2.2",
     "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
     "graphai_agent_utils": "^0.0.1",

@@ -8,7 +8,7 @@ import * as path from "node:path";
 
 import { GraphAI } from "graphai";
 import { openAIAgent } from "@graphai/openai_agent";
-import { copyAgent } from "@graphai/vanilla";
+import { copyAgent, nestedAgent } from "@graphai/vanilla";
 import { fileReadAgent, fileWriteAgent } from "@graphai/vanilla_node_agents";
 
 import "dotenv/config";
@@ -19,36 +19,18 @@ const runShellCommand = (command: string, path: string) => {
   return new Promise((resolve, failed) => {
     const exec = require("child_process").exec;
     exec(command, { cwd: path }, function (error: any, stdout: any, stderr: any) {
-      if (stdout) {
-        resolve(stdout);
-      }
       if (error) {
         failed(error);
-      }
-      if (stderr) {
+      } else if (stderr) {
         failed(stderr);
+      } else if (stdout) {
+        resolve(stdout);
       }
     });
   });
 };
 const yarnAdd = (npmPackage: string, path: string) => {
-  return new Promise((resolve, failed) => {
-    const exec = require("child_process").exec;
-    exec("yarn add " + npmPackage, { cwd: path }, function (error: any, stdout: any, stderr: any) {
-      if (stdout) {
-        console.log("stdout");
-        resolve(stdout);
-      }
-      if (error) {
-        console.log("error");
-        failed(error);
-      }
-      if (stderr) {
-        console.log("stderr");
-        failed(stderr);
-      }
-    });
-  });
+  return runShellCommand("yarn add " + npmPackage, path);
 };
 
 const tools = [
@@ -121,9 +103,10 @@ const main = async () => {
       specLLM: {
         agent: "openAIAgent",
         inputs: {
-          prompt: "以下の仕様を元に必要な情報を教えて下さい\n\n ${:specFile.data}",
+          prompt: "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください\n\n ${:specFile.data}",
           tools,
         },
+        console: {after: true},
       },
       createSkeleton: {
         agent: async (namedInputs: { data: { agentName: string; description: string; category: string } }) => {
@@ -146,61 +129,72 @@ const main = async () => {
         },
         isResult: true,
       },
-      sourceFile: {
-        agent: "fileReadAgent",
-        inputs: {
-          file: ":createSkeleton.source",
-        },
-        params: {
-          basePath: path.resolve(__dirname, ".."),
-          outputType: "text",
-        },
-      },
-      llm: {
-        agent: "openAIAgent",
-        inputs: {
-          system: ":specFile.data",
-          prompt: "以下のソースを仕様に従って変更して\n\n ${:sourceFile.data}",
-        },
-        // console: {
-        //  before:true
-        //},
-      },
-      res: {
-        agent: "copyAgent",
-        inputs: {
-          text: ":llm.text.codeBlock()",
-        },
+      programmer: {
+        agent: "nestedAgent",
         isResult: true,
-      },
-      writeFile: {
-        agent: "fileWriteAgent",
         inputs: {
-          fileName: ":createSkeleton.source",
-          text: ":llm.text.codeBlock()",
+          sourceFilePath: ":createSkeleton.source",
+          agentDir: ":createSkeleton.dir",
+          specData: ":specFile.data",
         },
-        params: {
-          basePath: path.resolve(__dirname, ".."),
-          outputType: "text",
-        },
-      },
-      yarnTest: {
-        agent: async (inputs: { dir: string }) => {
-          const { dir } = inputs;
-          const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", dir));
-          return {
-            result,
-          };
-        },
-        inputs: {
-          data: ":writeFile.result",
-          dir: ":createSkeleton.dir",
-        },
-        isResult: true,
+        graph: {
+          nodes:{
+            sourceFile: {
+              agent: "fileReadAgent",
+              inputs: {
+                file: ":sourceFilePath",
+              },
+              params: {
+                basePath: path.resolve(__dirname, ".."),
+                outputType: "text",
+              },
+            },
+            llm: {
+              agent: "openAIAgent",
+              inputs: {
+                system: ":specData",
+                prompt: "以下のソースを仕様に従って変更して\n\n ${:sourceFile.data}",
+              },
+            },
+            res: {
+              agent: "copyAgent",
+              inputs: {
+                text: ":llm.text.codeBlock()",
+              },
+              isResult: true,
+            },
+            writeFile: {
+              agent: "fileWriteAgent",
+              inputs: {
+                fileName: ":sourceFilePath",
+                text: ":llm.text.codeBlock()",
+              },
+              params: {
+                basePath: path.resolve(__dirname, ".."),
+                outputType: "text",
+              },
+            },
+            yarnTest: {
+              agent: async (inputs: { dir: string }) => {
+                const { dir } = inputs;
+                await runShellCommand("yarn install", path.resolve(__dirname, "..", dir));
+                const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", dir));
+                return {
+                  result,
+                };
+              },
+              inputs: {
+                data: ":writeFile.result",
+                dir: ":agentDir",
+              },
+              isResult: true,
+            }
+          }
+        }
       },
     },
   };
-  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent });
+  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent });
   const result = (await graph.run()) as any;
   console.log(result);
 };

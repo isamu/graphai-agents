@@ -90,17 +90,17 @@
     "@graphai/llm_utils" "^0.0.2"
     openai "^4.75.0"
 
-"@graphai/vanilla@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.0.tgz#8cb74b660bc2f1884ba65e779f0b3361e6633d84"
-  integrity sha512-vyEvPCr3y8CUxLMa2fDlufgqItttgkNTz23kJfvZEZd7EZZz4S6zQrP8X/qvN0tSCAowVqVdIt99s7Fbw6/vlg==
+"@graphai/vanilla@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.2.tgz#f668a8101d35080a1817687dfd7be4a497743daa"
+  integrity sha512-5Q18TdxCw8LF+b8FYJzJBPe05wE36ji7g0OVABmzJQ/EjJ0deIgGx7g9uCFmPStIBPy6S6Ce2A349+c9ipkATw==
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
-"@graphai/vanilla_node_agents@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.0.tgz#931eaed4536fa911f545ef47631cf614449a991d"
-  integrity sha512-cFaf59dhONEcIW1RVr1jMX+vupUyc39mdoWrf+AVSgRR37wdCyVQVqwI4IFbn2d7qn2jpqjJefQX+CxHElH/iQ==
+"@graphai/vanilla_node_agents@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.2.tgz#5de320923f17c0adf805b54be11f0fc0b93c372c"
+  integrity sha512-imuSd4PjnTP4YDhMaLplKUF2RRRwKUFXb/Q+4G4bUPRATkqjIz3Or6VIWStFsDQc/rXTW/X6PoQJNW40OHOMUg==
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
@@ -200,10 +200,12 @@
   resolved "https://registry.yarnpkg.com/@receptron/agentdoc/-/agentdoc-0.0.6.tgz#79bcb5f3ca1214501cea255a436cce717af648b0"
   integrity sha512-P676DdkmRQPjTtjW5gvYrAojsn2aY+F8QbxQIc5CdNMRRvdkbVZViZqtFFhb/IY0tw/zyEauhI/u2y1XbnFj2g==
 
-"@receptron/test_utils@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@receptron/test_utils/-/test_utils-0.0.8.tgz#6e30d526a39b59a663b8d0c9f0216f54932df670"
-  integrity sha512-RfuuRZ12ip+dhwmh/NOBvPmV6NQQ3kpB2+6mZRu+zIOZkgVSNJ3CfMMjUCfAFWIGhDSRUz5uuw5MsfBZ8HzCpA==
+"@receptron/test_utils@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@receptron/test_utils/-/test_utils-0.2.2.tgz#03c6f33213c6b385249f779484baa1ff45f3de16"
+  integrity sha512-gcliVYSsmjhI6wATwM3gsNVH0pF/UgWfqLytKFRpbObkoauTGXd8BCfqGfqhXeb70Smd6slI6lXqik7ci25rpA==
+  dependencies:
+    yaml "^2.6.1"
 
 "@slack/logger@^4.0.0":
   version "4.0.0"
@@ -1662,6 +1664,11 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+yaml@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.6.1.tgz#42f2b1ba89203f374609572d5349fb8686500773"
+  integrity sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==
 
 yn@3.1.1:
   version "3.1.1"
