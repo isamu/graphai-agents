@@ -139,6 +139,7 @@ const main = async () => {
           sourceFilePath: ":createSkeleton.source",
           agentDir: ":createSkeleton.dir",
           specData: ":specFile.data",
+          packageBaseDir: ":packageBaseDir",
         },
         graph: {
           loop:{
@@ -155,7 +156,7 @@ const main = async () => {
                 file: ":sourceFilePath",
               },
               params: {
-                basePath: path.resolve(__dirname, "..", "tmp"),
+                basePath: ":packageBaseDir",
                 outputType: "text",
               },
             },
@@ -181,16 +182,16 @@ const main = async () => {
                 text: ":llm.text.codeBlock()",
               },
               params: {
-                basePath: path.resolve(__dirname, "..", "tmp"),
+                basePath: ":packageBaseDir",
                 outputType: "text",
               },
             },
             yarnTest: {
-              agent: async (inputs: { dir: string }) => {
-                const { dir } = inputs;
+              agent: async (inputs: { dir: string, packageBaseDir: string }) => {
+                const { dir, packageBaseDir } = inputs;
                 try {
-                  await runShellCommand("yarn install", path.resolve(__dirname, "..", "tmp", dir));
-                  const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", "tmp", dir));
+                  await runShellCommand("yarn install", path.resolve(packageBaseDir, dir));
+                  const result = await runShellCommand("yarn run test", path.resolve(packageBaseDir, dir));
                   return {
                     result,
                   };
@@ -211,6 +212,7 @@ const main = async () => {
               inputs: {
                 data: ":writeFile.result",
                 dir: ":agentDir",
+                packageBaseDir: ":packageBaseDir",
               },
               isResult: true,
             }
