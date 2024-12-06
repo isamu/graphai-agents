@@ -89,6 +89,9 @@ const main = async () => {
   const graphData = {
     version: 0.5,
     nodes: {
+      packageBaseDir: {
+        value:  path.resolve(__dirname, "..", "tmp"),
+      },
       specFile: {
         agent: "fileReadAgent",
         inputs: {
@@ -109,23 +112,23 @@ const main = async () => {
         console: {after: true},
       },
       createSkeleton: {
-        agent: async (namedInputs: { data: { agentName: string; description: string; category: string } }) => {
-          const outDir = path.resolve(__dirname, "..", "tmp");
+        agent: async (namedInputs: { data: { agentName: string; description: string; category: string }, baseDir: string }) => {
+          const outDir = namedInputs.baseDir;
           const { agentName, description, category } = namedInputs.data;
           const command = `npm create graphai-agent@latest  -- -c  --agentName "${agentName}" --description "${description}" --author me --license MIT --category "${category}" --outdir "${outDir}"`;
           const result = await runShellCommand(command, outDir);
 
           const { lowerCamelCase, snakeCase, kebabCase, normalized } = convertToLowerCamelCaseAndSnakeCase(agentName);
-          const source = path.join("tmp", kebabCase, "src", snakeCase + ".ts");
-          const dir = path.join("tmp", kebabCase);
+          const source = path.join(kebabCase, "src", snakeCase + ".ts");
 
           return {
             source,
-            dir,
+            dir: kebabCase,
           };
         },
         inputs: {
           data: ":specLLM.tool.arguments",
+          baseDir: ":packageBaseDir",
         },
         isResult: true,
       },
@@ -152,7 +155,7 @@ const main = async () => {
                 file: ":sourceFilePath",
               },
               params: {
-                basePath: path.resolve(__dirname, ".."),
+                basePath: path.resolve(__dirname, "..", "tmp"),
                 outputType: "text",
               },
             },
@@ -178,7 +181,7 @@ const main = async () => {
                 text: ":llm.text.codeBlock()",
               },
               params: {
-                basePath: path.resolve(__dirname, ".."),
+                basePath: path.resolve(__dirname, "..", "tmp"),
                 outputType: "text",
               },
             },
@@ -186,8 +189,8 @@ const main = async () => {
               agent: async (inputs: { dir: string }) => {
                 const { dir } = inputs;
                 try {
-                  await runShellCommand("yarn install", path.resolve(__dirname, "..", dir));
-                  const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", dir));
+                  await runShellCommand("yarn install", path.resolve(__dirname, "..", "tmp", dir));
+                  const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", "tmp", dir));
                   return {
                     result,
                   };
