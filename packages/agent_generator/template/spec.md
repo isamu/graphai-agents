@@ -18,3 +18,10 @@ AgentFunctionInfoのsampleは、unit testで利用します。
 inputs, paramsの入力に対して期待値のresultを設定してください。
 テストは挙動を網羅するために複数あってもよいです。
 inputs, params, resultは空でも良いので必ずセットしてください。
+
+TypeScriptで書いています。関数を追加する場合は必ず型をつけてください。
+
+AgentFunctionの型は以下です。params, result, namedInputsに型情報が必要な場合はgenericで設定をしてください。
+export type AgentFunction<ParamsType = DefaultParamsType, ResultType = DefaultResultData, NamedInputDataType = DefaultInputData> = (
+  context: AgentFunctionContext<ParamsType, NamedInputDataType>,
+) => Promise<ResultData<ResultType>>;
