@@ -1,8 +1,9 @@
 
-目的: 与えられた英語の文章の単語を数え、各単語のアルファベットの長さを数えて、長さの統計情報を知りたい
-入力値: { text }
+名前: prime factorization agent
+目的: 与えられた数字を素因数分解する
+入力値: { input }
 設定値: {}
-出力値  { numberOfWord: number, statics: any }
+出力値  { numbers: array[] }
 必要なパッケージ: なし
 必要な環境変数: なし
 
@@ -21,9 +22,6 @@ inputs, params, resultは空でも良いので必ずセットしてください�
 TypeScriptで書いています。関数を追加する場合は必ず型をつけてください。
 
 AgentFunctionの型は以下です。params, result, namedInputsに型情報が必要な場合はgenericで設定をしてください。
-ParamsType, ResultType, NamedInputDataTypeの型は使えないので、必ずprimitiveに型を書くか、型なしにしてください。
-AgentFunctionInfoは型情報は不要です。
-
 export type AgentFunction<ParamsType = DefaultParamsType, ResultType = DefaultResultData, NamedInputDataType = DefaultInputData> = (
   context: AgentFunctionContext<ParamsType, NamedInputDataType>,
 ) => Promise<ResultData<ResultType>>;

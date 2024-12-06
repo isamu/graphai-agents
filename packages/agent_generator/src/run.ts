@@ -16,13 +16,13 @@ import "dotenv/config";
 // npm create graphai-agent@latest  -- -c  --agentName hoge --description desc --author me --license ppp --category none --repository gitlab
 
 const runShellCommand = (command: string, path: string) => {
-  return new Promise((resolve, failed) => {
+  return new Promise((resolve, reject) => {
     const exec = require("child_process").exec;
     exec(command, { cwd: path }, function (error: any, stdout: any, stderr: any) {
       if (error) {
-        failed(error);
+        reject([error, stdout].join("\n"));
       } else if (stderr) {
-        failed(stderr);
+        reject([stderr, stdout].join("\n"));
       } else if (stdout) {
         resolve(stdout);
       }
@@ -138,7 +138,14 @@ const main = async () => {
           specData: ":specFile.data",
         },
         graph: {
+          loop:{
+            while: ":yarnTest.error"
+          },
           nodes:{
+            error: {
+              value: "",
+              update: ":yarnTest.error",
+            },
             sourceFile: {
               agent: "fileReadAgent",
               inputs: {
@@ -153,8 +160,9 @@ const main = async () => {
               agent: "openAIAgent",
               inputs: {
                 system: ":specData",
-                prompt: "以下のソースを仕様に従って変更して\n\n ${:sourceFile.data}",
+                prompt: "以下のソースを仕様に従って変更して\n\n ${:sourceFile.data}\n\n\nエラー情報\n\n${:error}",
               },
+              console: { before: true }
             },
             res: {
               agent: "copyAgent",
@@ -177,11 +185,25 @@ const main = async () => {
             yarnTest: {
               agent: async (inputs: { dir: string }) => {
                 const { dir } = inputs;
-                await runShellCommand("yarn install", path.resolve(__dirname, "..", dir));
-                const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", dir));
-                return {
-                  result,
-                };
+                try {
+                  await runShellCommand("yarn install", path.resolve(__dirname, "..", dir));
+                  const result = await runShellCommand("yarn run test", path.resolve(__dirname, "..", dir));
+                  return {
+                    result,
+                  };
+                } catch (e) {
+                  console.log("ERROR");
+                  // console.log(e);
+                  if (e instanceof Error) {
+                    console.log(e.message);
+                    return {
+                      error: e.message
+                    };
+                  }
+                  return {
+                    error: e
+                  };
+                }
               },
               inputs: {
                 data: ":writeFile.result",
