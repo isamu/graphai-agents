@@ -79,18 +79,6 @@ const tools = [
   },
 ];
 
-/*
-  "tool": {
-    "id": "call_Qrbc5qLGro1Ks4R42f9wgVXc",
-    "name": "generate_package",
-    "arguments": {
-      "agentName": "prime factorization agent",
-      "description": "This agent performs prime factorization on a given number.",
-      "category": "Mathematical Operations"
-    }
-  }
-*/
-
 const convertToLowerCamelCaseAndSnakeCase = (input: string) => {
   const __normalized = input
     .trim()
@@ -116,8 +104,6 @@ const convertToLowerCamelCaseAndSnakeCase = (input: string) => {
 };
 
 const main = async () => {
-  // const res = await yarnAdd("@aws-sdk/client-s3",  '/tmp/agent/agent_template/')
-  // console.log(res);
   const graphData = {
     version: 0.5,
     nodes: {
