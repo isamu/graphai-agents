@@ -19,7 +19,7 @@ const main = async () => {
             totext: {
                 agent: "pdf2textAgent",
                 inputs: {
-                    buffer: ":file.array.$0"
+                    buffer: ":file.array.$0",
                 },
             },
             prompt: {
@@ -32,13 +32,13 @@ const main = async () => {
                 agent: "openAIAgent",
                 inputs: {
                     system: ":prompt.text",
-                    prompt: ":totext.text"
+                    prompt: ":totext.text",
                 },
             },
         },
     };
     const graph = new graphai_1.GraphAI(graphData, { pdf2textAgent: pdf2text_agent_1.pdf2textAgent, fileReadAgent: vanilla_node_agents_1.fileReadAgent, promptsAgent: prompts_1.promptsAgent, openAIAgent: openai_agent_1.openAIAgent });
-    const result = await graph.run(true);
+    const result = (await graph.run(true));
     console.log(result.llm.text);
 };
 main();
