@@ -66,8 +66,8 @@ const yarnAdd = (npmPackage: string, path: string) => {
 };
 
 const main = async () => {
-  const spec = readSpec();
-  const source = readSrc();
+  // const spec = readSpec();
+  // const source = readSrc();
   // console.log(spec)
 
   // const res = await yarnAdd("@aws-sdk/client-s3",  '/tmp/agent/agent_template/')
@@ -78,7 +78,7 @@ const main = async () => {
       specFile: {
         agent: "fileReadAgent",
         inputs: {
-          file: "spec.md"
+          file: "template/spec.md"
         },
         params: {
           basePath: path.resolve(__dirname, ".."),
@@ -89,7 +89,7 @@ const main = async () => {
       sourceFile: {
         agent: "fileReadAgent",
         inputs: {
-          file: "zenn_agent.ts"
+          file: "template/agent.ts"
         },
         params: {
           basePath: path.resolve(__dirname, ".."),
