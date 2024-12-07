@@ -98,7 +98,7 @@ const main = async () => {
           file: "template/spec.md",
         },
         params: {
-          basePath: path.resolve(__dirname, ".."),
+          baseDir: path.resolve(__dirname, ".."),
           outputType: "text",
         },
         isResult: true,
@@ -156,7 +156,7 @@ const main = async () => {
                 file: ":sourceFilePath",
               },
               params: {
-                basePath: ":packageBaseDir",
+                baseDir: ":packageBaseDir",
                 outputType: "text",
               },
             },
@@ -178,11 +178,11 @@ const main = async () => {
             writeFile: {
               agent: "fileWriteAgent",
               inputs: {
-                fileName: ":sourceFilePath",
+                file: ":sourceFilePath",
                 text: ":llm.text.codeBlock()",
               },
               params: {
-                basePath: ":packageBaseDir",
+                baseDir: ":packageBaseDir",
                 outputType: "text",
               },
             },

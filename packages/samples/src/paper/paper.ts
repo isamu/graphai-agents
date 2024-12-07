@@ -15,7 +15,7 @@ const main = async () => {
       file: {
         agent: "fileReadAgent",
         inputs: { file: "2410.14735v2.pdf" },
-        params: { basePath: __dirname },
+        params: { baseDir: __dirname },
       },
       totext: {
         agent: "pdf2textAgent",

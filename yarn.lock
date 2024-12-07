@@ -97,10 +97,10 @@
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
-"@graphai/vanilla_node_agents@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.2.tgz#5de320923f17c0adf805b54be11f0fc0b93c372c"
-  integrity sha512-imuSd4PjnTP4YDhMaLplKUF2RRRwKUFXb/Q+4G4bUPRATkqjIz3Or6VIWStFsDQc/rXTW/X6PoQJNW40OHOMUg==
+"@graphai/vanilla_node_agents@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.3.tgz#a3f7a04c41c19eb6e84b6a291ff54c893eeebb39"
+  integrity sha512-LlzltQ8N4a6WMz10nxHXHKzgaoK7UIoqMIkosdSawXtmFa8KTMjEovb5wG2/jfilg9KoMeE4aIp46Ib80TvS+Q==
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
