@@ -1,6 +1,6 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
 
-import { exec } from 'child_process';
+import { exec } from "child_process";
 import * as path from "node:path";
 
 export const runShellCommand = (command: string, path?: string) => {
@@ -19,33 +19,34 @@ export const runShellCommand = (command: string, path?: string) => {
   });
 };
 
-
-export const runShellAgent: AgentFunction<{ }, { text?: string | unknown, error?: unknown }, { command: string,  baseDir?: string, dirs?: string[] }> = async ({ params, namedInputs }) => {
+export const runShellAgent: AgentFunction<null, { text?: string | unknown; error?: unknown }, { command: string; baseDir?: string; dirs?: string[] }> = async ({
+  namedInputs,
+}) => {
   const { baseDir, dirs, command } = namedInputs;
   const dir = (() => {
     if (dirs) {
       return path.resolve(...dirs);
     }
     if (baseDir) {
-      return baseDir
+      return baseDir;
     }
   })();
-    
+
   try {
     const result = await runShellCommand(command, dir);
     return {
-      text: result
+      text: result,
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
-        error: error.message
+        error: error.message,
       };
     }
     return {
       error,
     };
-  };
+  }
 };
 
 const runShellAgentInfo: AgentFunctionInfo = {
@@ -53,13 +54,15 @@ const runShellAgentInfo: AgentFunctionInfo = {
   agent: runShellAgent,
   mock: runShellAgent,
 
-  samples: [{
-    params: { baseDir: "./"},
-    inputs: { command: "echo 1"},
-    result: {
-      text: "1\n"
+  samples: [
+    {
+      params: {},
+      inputs: { command: "echo 1", baseDir: "./" },
+      result: {
+        text: "1\n",
+      },
     },
-  }],
+  ],
   description: "shell utility agent",
   category: ["system"],
   author: "isamu arimoto",

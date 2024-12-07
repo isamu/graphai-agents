@@ -1,6 +1,6 @@
 {
   "name": "@graphai/shell_utilty_agent",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "shell utilty agent",
   "main": "lib/index.js",
   "files": [
