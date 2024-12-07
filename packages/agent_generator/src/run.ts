@@ -112,14 +112,23 @@ const main = async () => {
         },
         console: { after: true },
       },
+      createSkeletonCommand: {
+        agent: "copyAgent",
+        inputs: {
+          command: "npm create graphai-agent@latest  -- -c  --agentName ${:specLLM.tool.arguments.agentName} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
+        },
+        isResult: true,
+      },
       createSkeleton: {
-        agent: async (namedInputs: { data: { agentName: string; description: string; category: string }; baseDir: string }) => {
-          const outDir = namedInputs.baseDir;
-          const { agentName, description, category } = namedInputs.data;
-          const command = `npm create graphai-agent@latest  -- -c  --agentName "${agentName}" --description "${description}" --author me --license MIT --category "${category}" --outdir "${outDir}"`;
-          const result = await runShellCommand(command, outDir);
-
-          const { lowerCamelCase, snakeCase, kebabCase, normalized } = convertToLowerCamelCaseAndSnakeCase(agentName);
+        agent: "runShellAgent",
+        inputs: {
+          command: ":createSkeletonCommand.command",
+          baseDir: ":packageBaseDir",
+        },
+      },
+      packageInfo: {
+        agent: async (namedInputs: { agentName: string }) => {
+          const { lowerCamelCase, snakeCase, kebabCase, normalized } = convertToLowerCamelCaseAndSnakeCase(namedInputs.agentName);
           const source = path.join(kebabCase, "src", snakeCase + ".ts");
 
           return {
@@ -128,8 +137,7 @@ const main = async () => {
           };
         },
         inputs: {
-          data: ":specLLM.tool.arguments",
-          baseDir: ":packageBaseDir",
+          agentName: ":specLLM.tool.arguments.agentName",
         },
         isResult: true,
       },
@@ -137,7 +145,8 @@ const main = async () => {
         agent: "nestedAgent",
         isResult: true,
         inputs: {
-          skeleton: ":createSkeleton",
+          waiting: ":createSkeleton",
+          skeleton: ":packageInfo",
           specFile: ":specFile",
           packageBaseDir: ":packageBaseDir",
         },
