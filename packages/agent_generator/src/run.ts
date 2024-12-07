@@ -10,6 +10,7 @@ import { GraphAI } from "graphai";
 import { openAIAgent } from "@graphai/openai_agent";
 import { copyAgent, nestedAgent } from "@graphai/vanilla";
 import { fileReadAgent, fileWriteAgent } from "@graphai/vanilla_node_agents";
+import { runShellAgent } from "@graphai/shell_utilty_agent";
 
 import "dotenv/config";
 
@@ -90,7 +91,7 @@ const main = async () => {
     version: 0.5,
     nodes: {
       packageBaseDir: {
-        value:  path.resolve(__dirname, "..", "tmp"),
+        value: path.resolve(__dirname, "..", "tmp"),
       },
       specFile: {
         agent: "fileReadAgent",
@@ -109,10 +110,10 @@ const main = async () => {
           prompt: "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください\n\n ${:specFile.data}",
           tools,
         },
-        console: {after: true},
+        console: { after: true },
       },
       createSkeleton: {
-        agent: async (namedInputs: { data: { agentName: string; description: string; category: string }, baseDir: string }) => {
+        agent: async (namedInputs: { data: { agentName: string; description: string; category: string }; baseDir: string }) => {
           const outDir = namedInputs.baseDir;
           const { agentName, description, category } = namedInputs.data;
           const command = `npm create graphai-agent@latest  -- -c  --agentName "${agentName}" --description "${description}" --author me --license MIT --category "${category}" --outdir "${outDir}"`;
@@ -136,16 +137,15 @@ const main = async () => {
         agent: "nestedAgent",
         isResult: true,
         inputs: {
-          sourceFilePath: ":createSkeleton.source",
-          agentDir: ":createSkeleton.dir",
-          specData: ":specFile.data",
+          skeleton: ":createSkeleton",
+          specFile: ":specFile",
           packageBaseDir: ":packageBaseDir",
         },
         graph: {
-          loop:{
-            while: ":yarnTest.error"
+          loop: {
+            while: ":yarnTest.error",
           },
-          nodes:{
+          nodes: {
             error: {
               value: "",
               update: ":yarnTest.error",
@@ -153,7 +153,7 @@ const main = async () => {
             sourceFile: {
               agent: "fileReadAgent",
               inputs: {
-                file: ":sourceFilePath",
+                file: ":skeleton.source",
               },
               params: {
                 baseDir: ":packageBaseDir",
@@ -163,10 +163,10 @@ const main = async () => {
             llm: {
               agent: "openAIAgent",
               inputs: {
-                system: ":specData",
+                system: ":specFile.data",
                 prompt: "以下のソースを仕様に従って変更して\n\n ${:sourceFile.data}\n\n\nエラー情報\n\n${:error}",
               },
-              console: { before: true }
+              console: { before: true },
             },
             res: {
               agent: "copyAgent",
@@ -178,7 +178,7 @@ const main = async () => {
             writeFile: {
               agent: "fileWriteAgent",
               inputs: {
-                file: ":sourceFilePath",
+                file: ":skeleton.source",
                 text: ":llm.text.codeBlock()",
               },
               params: {
@@ -186,42 +186,30 @@ const main = async () => {
                 outputType: "text",
               },
             },
-            yarnTest: {
-              agent: async (inputs: { dir: string, packageBaseDir: string }) => {
-                const { dir, packageBaseDir } = inputs;
-                try {
-                  await runShellCommand("yarn install", path.resolve(packageBaseDir, dir));
-                  const result = await runShellCommand("yarn run test", path.resolve(packageBaseDir, dir));
-                  return {
-                    result,
-                  };
-                } catch (e) {
-                  console.log("ERROR");
-                  // console.log(e);
-                  if (e instanceof Error) {
-                    console.log(e.message);
-                    return {
-                      error: e.message
-                    };
-                  }
-                  return {
-                    error: e
-                  };
-                }
-              },
+            yarnInstall: {
+              agent: "runShellAgent",
+              params: {},
               inputs: {
-                data: ":writeFile.result",
-                dir: ":agentDir",
-                packageBaseDir: ":packageBaseDir",
+                command: "yarn install",
+                waiting: ":writeFile.result",
+                dirs: [":packageBaseDir", ":skeleton.dir"],
               },
-              isResult: true,
-            }
-          }
-        }
+            },
+            yarnTest: {
+              agent: "runShellAgent",
+              params: {},
+              inputs: {
+                command: "yarn run test",
+                waiting: ":yarnInstall",
+                dirs: [":packageBaseDir", ":skeleton.dir"],
+              },
+            },
+          },
+        },
       },
     },
   };
-  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent });
+  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent, runShellAgent });
   const result = (await graph.run()) as any;
   console.log(result);
 };
