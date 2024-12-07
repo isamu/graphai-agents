@@ -3,36 +3,15 @@
 // agentの中身を実装する
 // unit testを動かす -> 失敗したら結果やエラーを元に3を再実装
 // できたら、documentもつくる
-import * as fs from "node:fs";
 import * as path from "node:path";
 
 import { GraphAI } from "graphai";
 import { openAIAgent } from "@graphai/openai_agent";
-import { copyAgent, nestedAgent } from "@graphai/vanilla";
+import { copyAgent, nestedAgent, stringCaseVariantsAgent } from "@graphai/vanilla";
 import { fileReadAgent, fileWriteAgent } from "@graphai/vanilla_node_agents";
 import { runShellAgent } from "@graphai/shell_utilty_agent";
 
 import "dotenv/config";
-
-// npm create graphai-agent@latest  -- -c  --agentName hoge --description desc --author me --license ppp --category none --repository gitlab
-
-const runShellCommand = (command: string, path: string) => {
-  return new Promise((resolve, reject) => {
-    const exec = require("child_process").exec;
-    exec(command, { cwd: path }, function (error: any, stdout: any, stderr: any) {
-      if (error) {
-        reject([error, stdout].join("\n"));
-      } else if (stderr) {
-        reject([stderr, stdout].join("\n"));
-      } else if (stdout) {
-        resolve(stdout);
-      }
-    });
-  });
-};
-const yarnAdd = (npmPackage: string, path: string) => {
-  return runShellCommand("yarn add " + npmPackage, path);
-};
 
 const tools = [
   {
@@ -62,7 +41,7 @@ const tools = [
   },
 ];
 
-const convertToLowerCamelCaseAndSnakeCase = (input: string) => {
+const normalizedName = (input: string) => {
   const __normalized = input
     .trim()
     .replace(/[\s-_]+/g, " ")
@@ -72,18 +51,7 @@ const convertToLowerCamelCaseAndSnakeCase = (input: string) => {
     __normalized.push("agent");
   }
   const normalized = __normalized.join(" ");
-
-  const lowerCamelCase = __normalized
-    .map((word, index) => {
-      if (index === 0) return word;
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join("");
-
-  const snakeCase = normalized.replace(/\s+/g, "_");
-  const kebabCase = normalized.replace(/\s+/g, "-");
-
-  return { lowerCamelCase, snakeCase, kebabCase, normalized };
+  return normalized;
 };
 
 const main = async () => {
@@ -112,29 +80,18 @@ const main = async () => {
         },
         console: { after: true },
       },
-      createSkeletonCommand: {
-        agent: "copyAgent",
-        inputs: {
-          command:
-            "npm create graphai-agent@latest  -- -c  --agentName ${:specLLM.tool.arguments.agentName} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
-        },
-        isResult: true,
-      },
       createSkeleton: {
         agent: "runShellAgent",
         inputs: {
-          command: ":createSkeletonCommand.command",
+          command:
+            "npm create graphai-agent@latest  -- -c  --agentName ${:specLLM.tool.arguments.agentName} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
           baseDir: ":packageBaseDir",
         },
       },
-      packageInfo: {
+      normalizedAgentName: {
         agent: async (namedInputs: { agentName: string }) => {
-          const { lowerCamelCase, snakeCase, kebabCase, normalized } = convertToLowerCamelCaseAndSnakeCase(namedInputs.agentName);
-          const source = path.join(kebabCase, "src", snakeCase + ".ts");
-
           return {
-            source,
-            dir: kebabCase,
+            text: normalizedName(namedInputs.agentName),
           };
         },
         inputs: {
@@ -142,12 +99,32 @@ const main = async () => {
         },
         isResult: true,
       },
+      packageInfo: {
+        agent: "stringCaseVariantsAgent",
+        inputs: {
+          text: ":normalizedAgentName.text",
+        },
+        isResult: true,
+      },
+      srcFile: {
+        agent: async (namedInputs: { packageInfo: { kebabCase: string; snakeCase: string } }) => {
+          const { snakeCase, kebabCase } = namedInputs.packageInfo;
+          const source = path.join(kebabCase, "src", snakeCase + ".ts");
+          return {
+            text: source,
+          };
+        },
+        inputs: {
+          packageInfo: ":packageInfo",
+        },
+      },
       programmer: {
         agent: "nestedAgent",
         isResult: true,
         inputs: {
           waiting: ":createSkeleton",
-          skeleton: ":packageInfo",
+          packageInfo: ":packageInfo",
+          srcFile: ":srcFile",
           specFile: ":specFile",
           packageBaseDir: ":packageBaseDir",
         },
@@ -163,7 +140,7 @@ const main = async () => {
             sourceFile: {
               agent: "fileReadAgent",
               inputs: {
-                file: ":skeleton.source",
+                file: ":srcFile.text",
               },
               params: {
                 baseDir: ":packageBaseDir",
@@ -188,7 +165,7 @@ const main = async () => {
             writeFile: {
               agent: "fileWriteAgent",
               inputs: {
-                file: ":skeleton.source",
+                file: ":srcFile.text",
                 text: ":llm.text.codeBlock()",
               },
               params: {
@@ -202,7 +179,7 @@ const main = async () => {
               inputs: {
                 command: "yarn install",
                 waiting: ":writeFile.result",
-                dirs: [":packageBaseDir", ":skeleton.dir"],
+                dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
               },
             },
             yarnTest: {
@@ -211,7 +188,7 @@ const main = async () => {
               inputs: {
                 command: "yarn run test",
                 waiting: ":yarnInstall",
-                dirs: [":packageBaseDir", ":skeleton.dir"],
+                dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
               },
             },
           },
@@ -219,7 +196,7 @@ const main = async () => {
       },
     },
   };
-  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent, runShellAgent });
+  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent, runShellAgent, stringCaseVariantsAgent });
   const result = (await graph.run()) as any;
   console.log(result);
 };
