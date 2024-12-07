@@ -18,7 +18,7 @@
   "author": "isamu arimoto",
   "license": "MIT",
   "devDependencies": {
-    "@graphai/vanilla": "^0.2.2",
+    "@graphai/vanilla": "^0.2.4",
     "@receptron/agentdoc": "^0.0.6",
     "@receptron/test_utils": "^0.2.2",
     "@types/node": "^22.10.1",

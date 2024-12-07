@@ -90,10 +90,10 @@
     "@graphai/llm_utils" "^0.0.2"
     openai "^4.75.0"
 
-"@graphai/vanilla@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.2.tgz#f668a8101d35080a1817687dfd7be4a497743daa"
-  integrity sha512-5Q18TdxCw8LF+b8FYJzJBPe05wE36ji7g0OVABmzJQ/EjJ0deIgGx7g9uCFmPStIBPy6S6Ce2A349+c9ipkATw==
+"@graphai/vanilla@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.4.tgz#1ebbac6f7c12443aca3e1d0976c0549db404f88f"
+  integrity sha512-obHojYAyHVNNSTEkRvkXfdRBNJ1Qh0IrupGYjdpoh0Y70UGkHUSIjaSuodtH2ti3P5YnLPgB+7ztk1OnNe6OAA==
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
