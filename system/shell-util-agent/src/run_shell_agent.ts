@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import * as path from "node:path";
 
 export const runShellCommand = (command: string, path?: string) => {
+  // console.log(command, path);
   return new Promise((resolve, reject) => {
     // const exec = require("child_process").exec;
     exec(command, { cwd: path ?? process.cwd() }, function (error: any, stdout: any, stderr: any) {
@@ -19,8 +20,8 @@ export const runShellCommand = (command: string, path?: string) => {
 };
 
 
-export const runShellAgent: AgentFunction<{ baseDir?: string, dirs?: string[] }, { text?: string | unknown, error?: unknown }, { command: string }> = async ({ params, namedInputs }) => {
-  const { baseDir, dirs } = params;
+export const runShellAgent: AgentFunction<{ }, { text?: string | unknown, error?: unknown }, { command: string,  baseDir?: string, dirs?: string[] }> = async ({ params, namedInputs }) => {
+  const { baseDir, dirs, command } = namedInputs;
   const dir = (() => {
     if (dirs) {
       return path.resolve(...dirs);
@@ -30,7 +31,6 @@ export const runShellAgent: AgentFunction<{ baseDir?: string, dirs?: string[] },
     }
   })();
     
-  const { command } = namedInputs;
   try {
     const result = await runShellCommand(command, dir);
     return {
