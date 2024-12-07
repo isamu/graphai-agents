@@ -24,6 +24,7 @@
     "packages/*",
     "documents/*",
     "prompts/*",
+    "system/*",
     "net/*"
   ],
   "devDependencies": {
