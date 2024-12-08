@@ -90,17 +90,24 @@
     "@graphai/llm_utils" "^0.0.2"
     openai "^4.75.0"
 
-"@graphai/vanilla@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.4.tgz#1ebbac6f7c12443aca3e1d0976c0549db404f88f"
-  integrity sha512-obHojYAyHVNNSTEkRvkXfdRBNJ1Qh0IrupGYjdpoh0Y70UGkHUSIjaSuodtH2ti3P5YnLPgB+7ztk1OnNe6OAA==
+"@graphai/vanilla@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.5.tgz#d439fb31d52be7087bd764264376e20b5e3632e2"
+  integrity sha512-NtBz+MDJ6Z25H6ORhF08Qra5hdqD4kptGFc/i8JjRTaPo5vCm1pK7WIyzYed0FbloPd2qYUmOObGsJnMLmSERw==
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
-"@graphai/vanilla_node_agents@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.3.tgz#a3f7a04c41c19eb6e84b6a291ff54c893eeebb39"
-  integrity sha512-LlzltQ8N4a6WMz10nxHXHKzgaoK7UIoqMIkosdSawXtmFa8KTMjEovb5wG2/jfilg9KoMeE4aIp46Ib80TvS+Q==
+"@graphai/vanilla_node_agents@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.4.tgz#38e3601b49314ed1b171b06a87d9e73a8f1fc86c"
+  integrity sha512-vEZuT2xHfGIhVATUNQURgLcjPhFUxf6H2y1khKHBu/ALbJPDbIbQPjvleXLftBsPlcI0gBhVWBnF+N4hsKrTOA==
+  dependencies:
+    "@graphai/agent_utils" "0.0.3"
+
+"@graphai/vanilla_node_agents@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@graphai/vanilla_node_agents/-/vanilla_node_agents-0.2.5.tgz#69c53bddf043a687c71773ee4ec5a28a93c54072"
+  integrity sha512-w4j1Y0yYjK+sk7+Et4TR8pX/MdVlUoVF7i0+yo8M+9pP29zRDG7beGlErOXnswRF2ObVPi3QlRsWpjoG7Q2dfQ==
   dependencies:
     "@graphai/agent_utils" "0.0.3"
 
