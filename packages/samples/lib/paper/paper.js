@@ -13,13 +13,13 @@ const main = async () => {
         nodes: {
             file: {
                 agent: "fileReadAgent",
-                inputs: { array: ["2410.14735v2.pdf"] },
-                params: { basePath: __dirname + "/" },
+                inputs: { file: "2410.14735v2.pdf" },
+                params: { baseDir: __dirname },
             },
             totext: {
                 agent: "pdf2textAgent",
                 inputs: {
-                    buffer: ":file.array.$0",
+                    buffer: ":file.data",
                 },
             },
             prompt: {
