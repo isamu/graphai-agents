@@ -46,7 +46,19 @@ const main = async () => {
     version: 0.5,
     nodes: {
       packageBaseDir: {
-        value: path.resolve(__dirname, "..", "tmp"),
+        value: "",
+      },
+      templateBaseDir: {
+        value: "",
+      },
+      specPrompt: {
+        value: "",
+      },
+      implementPrompt: {
+        value: "",
+      },
+      errorPrompt: {
+        value: "",
       },
       specFile: {
         agent: "fileReadAgent",
@@ -54,7 +66,7 @@ const main = async () => {
           file: "template/spec.md",
         },
         params: {
-          baseDir: path.resolve(__dirname, ".."),
+          baseDir: ":templateBaseDir",
           outputType: "text",
         },
         isResult: true,
@@ -62,7 +74,7 @@ const main = async () => {
       specLLM: {
         agent: "openAIAgent",
         inputs: {
-          prompt: "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください\n\n ${:specFile.data}",
+          prompt: "${:specPrompt}\n\n ${:specFile.data}",
           tools,
         },
         console: { after: true },
@@ -78,7 +90,7 @@ const main = async () => {
       packageInfo: {
         agent: "stringCaseVariantsAgent",
         params: {
-          suffix: "agent"
+          suffix: "agent",
         },
         inputs: {
           text: ":specLLM.tool.arguments.agentName",
@@ -99,6 +111,8 @@ const main = async () => {
           srcFile: ":srcFile",
           specFile: ":specFile",
           packageBaseDir: ":packageBaseDir",
+          implementPrompt: ":implementPrompt",
+          errorPrompt: ":errorPrompt",
         },
         graph: {
           loop: {
@@ -123,7 +137,7 @@ const main = async () => {
               agent: "openAIAgent",
               inputs: {
                 system: ":specFile.data",
-                prompt: "以下のソースを仕様に従って変更して\n\n ${:sourceFile.data}\n\n\nエラー情報\n\n${:error}",
+                prompt: "${:implementPrompt}\n\n ${:sourceFile.data}\n\n\n${:errorPrompt}\n\n${:error}",
               },
               console: { before: true },
             },
@@ -168,7 +182,21 @@ const main = async () => {
       },
     },
   };
-  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent, runShellAgent, stringCaseVariantsAgent, pathUtilsAgent });
+  const graph = new GraphAI(graphData, {
+    openAIAgent,
+    copyAgent,
+    fileReadAgent,
+    fileWriteAgent,
+    nestedAgent,
+    runShellAgent,
+    stringCaseVariantsAgent,
+    pathUtilsAgent,
+  });
+  graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+  graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
+  graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください");
+  graph.injectValue("implementPrompt", "以下のソースを仕様に従って変更して");
+  graph.injectValue("errorPrompt", "エラー情報");
   const result = (await graph.run()) as any;
   console.log(result);
 };
