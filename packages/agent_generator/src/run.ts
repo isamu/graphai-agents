@@ -24,7 +24,7 @@ const tools = [
         properties: {
           agentName: {
             type: "string",
-            description: "The agent name.",
+            description: "The agent name. Separate words with spaces.",
           },
           description: {
             type: "string",
@@ -33,6 +33,13 @@ const tools = [
           category: {
             type: "string",
             description: "category of the agent.",
+          },
+          npmPackages: {
+            type: "array",
+            description: "list of npm package if you need.",
+            items: {
+              type: "string",
+            }
           },
         },
         required: ["agentName", "description", "category"],
@@ -60,15 +67,21 @@ const main = async () => {
       errorPrompt: {
         value: "",
       },
-      specFile: {
+      specFileReader: {
         agent: "fileReadAgent",
         inputs: {
-          file: "template/spec.md",
+          array: ["template/spec.md", "template/spec_base.md"],
         },
         params: {
           baseDir: ":templateBaseDir",
           outputType: "text",
         },
+        console: { after: true},
+        isResult: true,
+      },
+      specFile: {
+        agent: "copyAgent",
+        inputs: { data: "${:specFileReader.array.$0}\n\n${:specFileReader.array.$1}" },
         isResult: true,
       },
       specLLM: {
@@ -79,14 +92,6 @@ const main = async () => {
         },
         console: { after: true },
       },
-      createSkeleton: {
-        agent: "runShellAgent",
-        inputs: {
-          command:
-            "npm create graphai-agent@latest  -- -c  --agentName ${:specLLM.tool.arguments.agentName} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
-          baseDir: ":packageBaseDir",
-        },
-      },
       packageInfo: {
         agent: "stringCaseVariantsAgent",
         params: {
@@ -96,6 +101,14 @@ const main = async () => {
           text: ":specLLM.tool.arguments.agentName",
         },
         isResult: true,
+      },
+      createSkeleton: {
+        agent: "runShellAgent",
+        inputs: {
+          command:
+          "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
+          baseDir: ":packageBaseDir",
+        },
       },
       srcFile: {
         agent: "pathUtilsAgent",
@@ -172,7 +185,7 @@ const main = async () => {
               agent: "runShellAgent",
               params: {},
               inputs: {
-                command: "yarn run test",
+                command: "yarn run test && yarn run eslint",
                 waiting: ":yarnInstall",
                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
               },
@@ -180,6 +193,28 @@ const main = async () => {
           },
         },
       },
+      final: {
+        agent: "runShellAgent",
+        params: {},
+        inputs: {
+          command: "yarn run build && yarn run doc",
+          dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+          waiting: ":programmer",
+        },
+      },
+      writeSpec: {
+        agent: "fileWriteAgent",
+        inputs: {
+          file: "spec.txt",
+          waiting: ":programmer",
+          text: ":specFileReader.array.$0",
+        },
+        params: {
+          baseDir: "${:packageBaseDir}/${:packageInfo.kebabCase}",
+          outputType: "text",
+        },
+      },
+      
     },
   };
   const graph = new GraphAI(graphData, {
@@ -192,9 +227,10 @@ const main = async () => {
     stringCaseVariantsAgent,
     pathUtilsAgent,
   });
-  graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+
   graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
-  graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください");
+  graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+  graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
   graph.injectValue("implementPrompt", "以下のソースを仕様に従って変更して");
   graph.injectValue("errorPrompt", "エラー情報");
   const result = (await graph.run()) as any;

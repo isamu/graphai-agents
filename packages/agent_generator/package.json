@@ -12,6 +12,7 @@
     "format": "prettier --write '{src,tests}/**/*.ts'",
     "doc": "npx agentdoc",
     "run": "npx ts-node src/run.ts",
+    "run2": "npx ts-node src/run2.ts",
     "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
     "test": "node --test --require ts-node/register ./tests/test_*.ts",
     "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
@@ -32,6 +33,6 @@
     "@graphai/shell_utilty_agent": "^0.0.3",
     "@graphai/vanilla": "^0.2.5",
     "@graphai/vanilla_node_agents": "^0.2.5",
-    "graphai": "^0.6.2"
+    "graphai": "^0.6.3"
   }
 }
