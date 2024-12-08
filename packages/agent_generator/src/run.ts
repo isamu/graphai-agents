@@ -8,7 +8,7 @@ import * as path from "node:path";
 import { GraphAI } from "graphai";
 import { openAIAgent } from "@graphai/openai_agent";
 import { copyAgent, nestedAgent, stringCaseVariantsAgent } from "@graphai/vanilla";
-import { fileReadAgent, fileWriteAgent } from "@graphai/vanilla_node_agents";
+import { fileReadAgent, fileWriteAgent, pathUtilsAgent } from "@graphai/vanilla_node_agents";
 import { runShellAgent } from "@graphai/shell_utilty_agent";
 
 import "dotenv/config";
@@ -40,19 +40,6 @@ const tools = [
     },
   },
 ];
-
-const normalizedName = (input: string) => {
-  const __normalized = input
-    .trim()
-    .replace(/[\s-_]+/g, " ")
-    .toLowerCase()
-    .split(" ");
-  if (__normalized[__normalized.length - 1] !== "agent") {
-    __normalized.push("agent");
-  }
-  const normalized = __normalized.join(" ");
-  return normalized;
-};
 
 const main = async () => {
   const graphData = {
@@ -88,35 +75,20 @@ const main = async () => {
           baseDir: ":packageBaseDir",
         },
       },
-      normalizedAgentName: {
-        agent: async (namedInputs: { agentName: string }) => {
-          return {
-            text: normalizedName(namedInputs.agentName),
-          };
-        },
-        inputs: {
-          agentName: ":specLLM.tool.arguments.agentName",
-        },
-        isResult: true,
-      },
       packageInfo: {
         agent: "stringCaseVariantsAgent",
+        params: {
+          suffix: "agent"
+        },
         inputs: {
-          text: ":normalizedAgentName.text",
+          text: ":specLLM.tool.arguments.agentName",
         },
         isResult: true,
       },
       srcFile: {
-        agent: async (namedInputs: { packageInfo: { kebabCase: string; snakeCase: string } }) => {
-          const { snakeCase, kebabCase } = namedInputs.packageInfo;
-          const source = path.join(kebabCase, "src", snakeCase + ".ts");
-          return {
-            text: source,
-          };
-        },
-        inputs: {
-          packageInfo: ":packageInfo",
-        },
+        agent: "pathUtilsAgent",
+        params: { method: "join" },
+        inputs: { dirs: [":packageInfo.kebabCase", "src", "${:packageInfo.snakeCase}.ts"] },
       },
       programmer: {
         agent: "nestedAgent",
@@ -140,7 +112,7 @@ const main = async () => {
             sourceFile: {
               agent: "fileReadAgent",
               inputs: {
-                file: ":srcFile.text",
+                file: ":srcFile.path",
               },
               params: {
                 baseDir: ":packageBaseDir",
@@ -165,7 +137,7 @@ const main = async () => {
             writeFile: {
               agent: "fileWriteAgent",
               inputs: {
-                file: ":srcFile.text",
+                file: ":srcFile.path",
                 text: ":llm.text.codeBlock()",
               },
               params: {
@@ -196,7 +168,7 @@ const main = async () => {
       },
     },
   };
-  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent, runShellAgent, stringCaseVariantsAgent });
+  const graph = new GraphAI(graphData, { openAIAgent, copyAgent, fileReadAgent, fileWriteAgent, nestedAgent, runShellAgent, stringCaseVariantsAgent, pathUtilsAgent });
   const result = (await graph.run()) as any;
   console.log(result);
 };
