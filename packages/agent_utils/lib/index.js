@@ -6,12 +6,10 @@ const agentRunner = async (agentInfo) => {
     const { agent, samples, inputs: inputSchema } = agentInfo;
     const ret = await Promise.all(samples.map(async (sample) => {
         const { params, inputs, result, graph } = sample;
-        const flatInputs = Array.isArray(inputs) ? inputs : [];
         const namedInputs = Array.isArray(inputs) ? {} : inputs;
         const actual = await agent({
             ...graphai_1.defaultTestContext,
             params,
-            inputs: flatInputs,
             inputSchema,
             namedInputs,
         });
