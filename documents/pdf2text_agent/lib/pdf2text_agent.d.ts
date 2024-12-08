@@ -3,7 +3,7 @@ export declare const pdf2textAgent: AgentFunction<{
     type: string;
 }, {
     text?: string;
-}, null, {
+}, {
     buffer: Buffer;
 }>;
 declare const pdf2textAgentInfo: AgentFunctionInfo;
