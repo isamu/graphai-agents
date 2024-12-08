@@ -29,6 +29,7 @@
   "devDependencies": {},
   "dependencies": {
     "@graphai/openai_agent": "^0.2.0",
+    "@graphai/shell_utilty_agent": "^0.0.3",
     "@graphai/vanilla": "^0.2.5",
     "@graphai/vanilla_node_agents": "^0.2.5",
     "graphai": "^0.6.2"
