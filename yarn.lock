@@ -90,6 +90,11 @@
     "@graphai/llm_utils" "^0.0.2"
     openai "^4.75.0"
 
+"@graphai/shell_utilty_agent@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@graphai/shell_utilty_agent/-/shell_utilty_agent-0.0.3.tgz#7cc8a6d4e436bfa4433de7b604863e4f3bd60afe"
+  integrity sha512-SutHkT5sX6Pdse0NFDtuhxDv9Fd8rWZk4FBJ0g8kFVI1Z8Z9iDxQtwUXGytVzJvc2xYRYAMql5V2vhkwZTLZag==
+
 "@graphai/vanilla@^0.2.5":
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@graphai/vanilla/-/vanilla-0.2.5.tgz#d439fb31d52be7087bd764264376e20b5e3632e2"
@@ -949,6 +954,11 @@ graphai@^0.6.4:
   resolved "https://registry.yarnpkg.com/graphai/-/graphai-0.6.4.tgz#608c43fcd7b314629712a26f5eaec0dc73733ed2"
   integrity sha512-gbZPWcX1eFtu+GKvWrc1rTSsv0RUzjNc2hUNKL/9FyIMvErtV/YFJ+eqtgzC8pQIX+gA2ihOiZaNvW+3onKBmw==
 
+graphai@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/graphai/-/graphai-0.6.4.tgz#608c43fcd7b314629712a26f5eaec0dc73733ed2"
+  integrity sha512-gbZPWcX1eFtu+GKvWrc1rTSsv0RUzjNc2hUNKL/9FyIMvErtV/YFJ+eqtgzC8pQIX+gA2ihOiZaNvW+3onKBmw==
+
 graphemer@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/graphemer/-/graphemer-1.4.0.tgz#fb2f1d55e0e3a1849aeffc90c4fa0dd53a0e66c6"
@@ -1020,11 +1030,6 @@ is-extglob@^2.1.1:
   resolved "https://registry.yarnpkg.com/is-extglob/-/is-extglob-2.1.1.tgz#a88c02535791f02ed37c76a1b9ea9773c833f8c2"
   integrity sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==
 
-is-finite@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/is-finite/-/is-finite-1.1.0.tgz#904135c77fb42c0641d6aa1bcdbc4daa8da082f3"
-  integrity sha512-cdyMtqX/BOqqNBBiKlIVkytNHm49MtMlYyn1zxzvJKWmFMlGzm+ry5BBfYyeY9YmNKbRSo/o7OX9w9ale0wg3w==
-
 is-fullwidth-code-point@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz#f116f8064fe90b3f7844a38997c0b75051269f1d"
@@ -1041,13 +1046,6 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
-
-is-prime@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/is-prime/-/is-prime-1.0.1.tgz#b2d735b11910ef3d4175bf75de4e8835c4a8b1de"
-  integrity sha512-2jEq1bckTvaKN6DVbq+6C8ecqJevQWtUgGOoED26S8nUr2+efYvRKlaYnj3Vx4mEFyAaE9PYfkRlMBEzJMLKpg==
-  dependencies:
-    number-is-integer "*"
 
 is-stream@^2:
   version "2.0.1"
@@ -1247,13 +1245,6 @@ npmlog@^5.0.1:
     console-control-strings "^1.1.0"
     gauge "^3.0.0"
     set-blocking "^2.0.0"
-
-number-is-integer@*:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/number-is-integer/-/number-is-integer-2.0.0.tgz#93958834ceae7aa0bb22c5cca910c10c8cdaaf85"
-  integrity sha512-sNqkyjlp8T5DHX51pnAWuF8OUQBSo4WzQ6D4Gemt+UtRf+ra3etdt/sE9vxQHoRLY573Gbb4oZsDTNp7tfUQjA==
-  dependencies:
-    is-finite "^1.0.1"
 
 object-assign@^4.1.1:
   version "4.1.1"

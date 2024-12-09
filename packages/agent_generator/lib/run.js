@@ -203,13 +203,15 @@ const main = async () => {
                 },
                 graph: {
                     loop: {
-                        // while: ":isLoop.array",
                         while: ":yarnTest.error",
                     },
                     nodes: {
+                        npmPackages: {
+                            update: ":npmPackagesStack.array"
+                        },
                         error: {
                             value: "",
-                            update: ":yarnTest.error",
+                            update: ":yarnTest.stdout",
                         },
                         sourceFile: {
                             agent: "fileReadAgent",
@@ -225,7 +227,8 @@ const main = async () => {
                             agent: "openAIAgent",
                             inputs: {
                                 system: ":specFile.data",
-                                prompt: "${:implementPrompt}\n\n###ソース###\n\n${:sourceFile.data}\n\n\n###npmは以下が追加さています###\n${:npmPackages.join( )}\n\n###${:errorPrompt}###\n\n${:error}",
+                                prompt: "${:implementPrompt}\n\n###ソース###\n\n${:sourceFile.data}\n\n\n###npmは以下が追加さています###\n${:npmPackages.join(,)}\n\n###${:errorPrompt}###\n\n${:error}",
+                                // model: "o1-mini",
                                 // tools: tools_npminstall,
                             },
                             console: { before: true, after: true },
@@ -238,9 +241,6 @@ const main = async () => {
                                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
                             },
                             defaultValue: {},
-                            console: {
-                                before: true, after: true
-                            },
                         },
                         res: {
                             agent: "copyAgent",
@@ -261,6 +261,9 @@ const main = async () => {
                                 baseDir: ":packageBaseDir",
                                 outputType: "text",
                             },
+                            console: {
+                                before: true,
+                            },
                         },
                         yarnTest: {
                             agent: "runShellAgent",
@@ -269,6 +272,16 @@ const main = async () => {
                                 command: "yarn run test",
                                 waiting: ":writeFile",
                                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+                            },
+                            console: {
+                                after: true
+                            },
+                        },
+                        npmPackagesStack: {
+                            agent: "pushAgent",
+                            inputs: {
+                                array: ":npmPackages",
+                                items: [":llm.tool.arguments.npmPackages"]
                             },
                             console: {
                                 after: true
@@ -311,6 +324,7 @@ const main = async () => {
     const graph = new graphai_1.GraphAI(graphData, {
         openAIAgent: openai_agent_1.openAIAgent,
         copyAgent: vanilla_1.copyAgent,
+        pushAgent: vanilla_1.pushAgent,
         fileReadAgent: vanilla_node_agents_1.fileReadAgent,
         fileWriteAgent: vanilla_node_agents_1.fileWriteAgent,
         nestedAgent: vanilla_1.nestedAgent,
@@ -319,8 +333,10 @@ const main = async () => {
         pathUtilsAgent: vanilla_node_agents_1.pathUtilsAgent,
     });
     graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
-    graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
-    // graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+    // graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
+    graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+    graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
+    graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
     graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
     graph.injectValue("implementPrompt", "以下のソースを仕様に従って変更して");
     graph.injectValue("errorPrompt", "エラー情報");

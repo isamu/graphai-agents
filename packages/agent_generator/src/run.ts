@@ -94,7 +94,7 @@ const main = async () => {
           baseDir: ":templateBaseDir",
           outputType: "text",
         },
-        console: { after: true},
+        console: { after: true },
         isResult: true,
       },
       specFile: {
@@ -307,9 +307,14 @@ const main = async () => {
   });
 
   graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
-  graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
-  // graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+  // graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
+  graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
   graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
+  graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+  graph.injectValue(
+    "specPrompt",
+    "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。",
+  );
   graph.injectValue("implementPrompt", "以下のソースを仕様に従って変更して");
   graph.injectValue("errorPrompt", "エラー情報");
   const result = (await graph.run()) as any;

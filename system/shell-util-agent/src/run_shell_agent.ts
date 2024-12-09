@@ -3,21 +3,23 @@ import { AgentFunction, AgentFunctionInfo } from "graphai";
 import { exec } from "child_process";
 import * as path from "node:path";
 
-export const runShellCommand = (command: string, path?: string): Promise<{text?: string | unknown; error?: unknown, stderr?: unknown  }> => {
+export const runShellCommand = (command: string, path?: string): Promise<{ text?: string | unknown; error?: unknown; stderr?: unknown }> => {
   return new Promise((resolve, reject) => {
     exec(command, { cwd: path ?? process.cwd() }, function (error: any, stdout: any, stderr: any) {
       if (error) {
         reject({error, stderr, stdout});
       } else if (stdout) {
-        resolve({text: stdout, stderr});
+        resolve({ text: stdout, stderr });
       }
     });
   });
 };
 
-export const runShellAgent: AgentFunction<null, { text?: string | unknown; error?: unknown, stderr?: unknown }, { command: string; baseDir?: string; dirs?: string[] }> = async ({
-  namedInputs,
-}) => {
+export const runShellAgent: AgentFunction<
+  null,
+  { text?: string | unknown; error?: unknown; stderr?: unknown },
+  { command: string; baseDir?: string; dirs?: string[] }
+> = async ({ namedInputs }) => {
   const { baseDir, dirs, command } = namedInputs;
   const dir = (() => {
     if (dirs) {
