@@ -944,10 +944,10 @@ globals@^14.0.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-14.0.0.tgz#898d7413c29babcf6bafe56fcadded858ada724e"
   integrity sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==
 
-graphai@^0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/graphai/-/graphai-0.6.3.tgz#19d2f67dd8120fc6c629e592180b813d681da5c9"
-  integrity sha512-VsIU3O0jL34DCOehxZsGw1ou4AvQtmTdnh0wuw0yEvPA544jzpFIF3nVmXCKt64Bba4yPYW/CVL6Jq3evYyuIA==
+graphai@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/graphai/-/graphai-0.6.4.tgz#608c43fcd7b314629712a26f5eaec0dc73733ed2"
+  integrity sha512-gbZPWcX1eFtu+GKvWrc1rTSsv0RUzjNc2hUNKL/9FyIMvErtV/YFJ+eqtgzC8pQIX+gA2ihOiZaNvW+3onKBmw==
 
 graphemer@^1.4.0:
   version "1.4.0"
