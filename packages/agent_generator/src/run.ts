@@ -7,7 +7,7 @@ import * as path from "node:path";
 
 import { GraphAI } from "graphai";
 import { openAIAgent } from "@graphai/openai_agent";
-import { copyAgent, nestedAgent, stringCaseVariantsAgent } from "@graphai/vanilla";
+import { copyAgent, nestedAgent, stringCaseVariantsAgent, pushAgent } from "@graphai/vanilla";
 import { fileReadAgent, fileWriteAgent, pathUtilsAgent } from "@graphai/vanilla_node_agents";
 import { runShellAgent } from "@graphai/shell_utilty_agent";
 
@@ -35,11 +35,8 @@ const tools = [
             description: "category of the agent.",
           },
           npmPackages: {
-            type: "array",
-            description: "list of npm package if you need.",
-            items: {
-              type: "string",
-            }
+            type: "string",
+            description: "list of npm package if you need. Separate packages with spaces. ",
           },
         },
         required: ["agentName", "description", "category"],
@@ -47,6 +44,27 @@ const tools = [
     },
   },
 ];
+
+const tools_npminstall = [
+  {
+    type: "function",
+    function: {
+      name: "installNpm",
+      description: "install npm package",
+      parameters: {
+        type: "object",
+        properties: {
+          npmPackages: {
+            type: "string",
+            description: "list of npm package if you need. Separate packages with spaces. ",
+          },
+        },
+        required: ["npmPackages"],
+      },
+    },
+  },
+];
+
 
 const main = async () => {
   const graphData = {
@@ -106,8 +124,35 @@ const main = async () => {
         agent: "runShellAgent",
         inputs: {
           command:
-          "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
+          "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description '${:specLLM.tool.arguments.description}' --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
           baseDir: ":packageBaseDir",
+        },
+      },
+      yarnInstall: {
+        agent: "runShellAgent",
+        params: {},
+        inputs: {
+          command: "yarn install",
+          dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+        },
+      },
+      packageDir: {
+        agent: "copyAgent",
+        inputs: {
+          text: "${:packageBaseDir}/${:packageInfo.kebabCase}",
+        },
+      },
+      yarnAdd: {
+        agent: "runShellAgent",
+        if: ":specLLM.tool.arguments.npmPackages",
+        defaultValue: {},
+        inputs: {
+          command: "yarn add ${:specLLM.tool.arguments.npmPackages}",
+          baseDir: ":packageDir.text",
+          wait: ":createSkeleton",
+        },
+        console: {
+          before: true, after: true
         },
       },
       srcFile: {
@@ -119,22 +164,26 @@ const main = async () => {
         agent: "nestedAgent",
         isResult: true,
         inputs: {
-          waiting: ":createSkeleton",
+          waiting: ":yarnAdd",
           packageInfo: ":packageInfo",
           srcFile: ":srcFile",
           specFile: ":specFile",
           packageBaseDir: ":packageBaseDir",
           implementPrompt: ":implementPrompt",
           errorPrompt: ":errorPrompt",
+          npmPackages: [":specLLM.tool.arguments.npmPackages"],
         },
         graph: {
           loop: {
             while: ":yarnTest.error",
           },
           nodes: {
+            npmPackages: {
+              update: ":npmPackagesStack.array"
+            },
             error: {
               value: "",
-              update: ":yarnTest.error",
+              update: ":yarnTest.stdout",
             },
             sourceFile: {
               agent: "fileReadAgent",
@@ -150,9 +199,20 @@ const main = async () => {
               agent: "openAIAgent",
               inputs: {
                 system: ":specFile.data",
-                prompt: "${:implementPrompt}\n\n ${:sourceFile.data}\n\n\n${:errorPrompt}\n\n${:error}",
+                prompt: "${:implementPrompt}\n\n###ソース###\n\n${:sourceFile.data}\n\n\n###npmは以下が追加さています###\n${:npmPackages.join(,)}\n\n###${:errorPrompt}###\n\n${:error}",
+                // model: "o1-mini",
+                // tools: tools_npminstall,
               },
-              console: { before: true },
+              console: { before: true, after: true },
+            },
+            yarnAdd: {
+              agent: "runShellAgent",
+              if: ":llm.tool.arguments.npmPackages",
+              inputs: {
+                command: "yarn add ${:llm.tool.arguments.npmPackages}",
+                dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+              },
+              defaultValue: {},
             },
             res: {
               agent: "copyAgent",
@@ -162,6 +222,8 @@ const main = async () => {
               isResult: true,
             },
             writeFile: {
+              if: ":res.text",
+              defaultValue: {},
               agent: "fileWriteAgent",
               inputs: {
                 file: ":srcFile.path",
@@ -171,25 +233,39 @@ const main = async () => {
                 baseDir: ":packageBaseDir",
                 outputType: "text",
               },
-            },
-            yarnInstall: {
-              agent: "runShellAgent",
-              params: {},
-              inputs: {
-                command: "yarn install",
-                waiting: ":writeFile.result",
-                dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+              console: {
+                before: true,
               },
             },
             yarnTest: {
               agent: "runShellAgent",
               params: {},
               inputs: {
-                command: "yarn run test && yarn run eslint",
-                waiting: ":yarnInstall",
+                command: "yarn run test",
+                waiting: ":writeFile",
                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
               },
+              console: {
+                after: true
+              },
             },
+            npmPackagesStack: {
+              agent: "pushAgent",
+              inputs: {
+                array: ":npmPackages",
+                items: [":llm.tool.arguments.npmPackages"]
+              },
+              console: {
+                after: true
+              },
+
+            },
+            /*
+            isLoop: {
+              agent: "copyAgent",
+              inputs: { array: [":yarnTest.error", ":yarnAdd"]}
+              },
+            */
           },
         },
       },
@@ -202,6 +278,7 @@ const main = async () => {
           waiting: ":programmer",
         },
       },
+      /*
       writeSpec: {
         agent: "fileWriteAgent",
         inputs: {
@@ -214,12 +291,13 @@ const main = async () => {
           outputType: "text",
         },
       },
-      
+      */
     },
   };
   const graph = new GraphAI(graphData, {
     openAIAgent,
     copyAgent,
+    pushAgent,
     fileReadAgent,
     fileWriteAgent,
     nestedAgent,
@@ -229,7 +307,8 @@ const main = async () => {
   });
 
   graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
-  graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+  graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
+  // graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
   graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
   graph.injectValue("implementPrompt", "以下のソースを仕様に従って変更して");
   graph.injectValue("errorPrompt", "エラー情報");

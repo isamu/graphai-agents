@@ -56,7 +56,7 @@ const tools = [
                 properties: {
                     agentName: {
                         type: "string",
-                        description: "The agent name.",
+                        description: "The agent name. Separate words with spaces.",
                     },
                     description: {
                         type: "string",
@@ -66,8 +66,31 @@ const tools = [
                         type: "string",
                         description: "category of the agent.",
                     },
+                    npmPackages: {
+                        type: "string",
+                        description: "list of npm package if you need. Separate packages with spaces. ",
+                    },
                 },
                 required: ["agentName", "description", "category"],
+            },
+        },
+    },
+];
+const tools_npminstall = [
+    {
+        type: "function",
+        function: {
+            name: "installNpm",
+            description: "install npm package",
+            parameters: {
+                type: "object",
+                properties: {
+                    npmPackages: {
+                        type: "string",
+                        description: "list of npm package if you need. Separate packages with spaces. ",
+                    },
+                },
+                required: ["npmPackages"],
             },
         },
     },
@@ -91,15 +114,21 @@ const main = async () => {
             errorPrompt: {
                 value: "",
             },
-            specFile: {
+            specFileReader: {
                 agent: "fileReadAgent",
                 inputs: {
-                    file: "template/spec.md",
+                    array: ["template/spec.md", "template/spec_base.md"],
                 },
                 params: {
                     baseDir: ":templateBaseDir",
                     outputType: "text",
                 },
+                console: { after: true },
+                isResult: true,
+            },
+            specFile: {
+                agent: "copyAgent",
+                inputs: { data: "${:specFileReader.array.$0}\n\n${:specFileReader.array.$1}" },
                 isResult: true,
             },
             specLLM: {
@@ -109,13 +138,6 @@ const main = async () => {
                     tools,
                 },
                 console: { after: true },
-            },
-            createSkeleton: {
-                agent: "runShellAgent",
-                inputs: {
-                    command: "npm create graphai-agent@latest  -- -c  --agentName ${:specLLM.tool.arguments.agentName} --description ${:specLLM.tool.arguments.description} --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
-                    baseDir: ":packageBaseDir",
-                },
             },
             packageInfo: {
                 agent: "stringCaseVariantsAgent",
@@ -127,6 +149,40 @@ const main = async () => {
                 },
                 isResult: true,
             },
+            createSkeleton: {
+                agent: "runShellAgent",
+                inputs: {
+                    command: "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description '${:specLLM.tool.arguments.description}' --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
+                    baseDir: ":packageBaseDir",
+                },
+            },
+            yarnInstall: {
+                agent: "runShellAgent",
+                params: {},
+                inputs: {
+                    command: "yarn install",
+                    dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+                },
+            },
+            packageDir: {
+                agent: "copyAgent",
+                inputs: {
+                    text: "${:packageBaseDir}/${:packageInfo.kebabCase}",
+                },
+            },
+            yarnAdd: {
+                agent: "runShellAgent",
+                if: ":specLLM.tool.arguments.npmPackages",
+                defaultValue: {},
+                inputs: {
+                    command: "yarn add ${:specLLM.tool.arguments.npmPackages}",
+                    baseDir: ":packageDir.text",
+                    wait: ":createSkeleton",
+                },
+                console: {
+                    before: true, after: true
+                },
+            },
             srcFile: {
                 agent: "pathUtilsAgent",
                 params: { method: "join" },
@@ -136,16 +192,18 @@ const main = async () => {
                 agent: "nestedAgent",
                 isResult: true,
                 inputs: {
-                    waiting: ":createSkeleton",
+                    waiting: ":yarnAdd",
                     packageInfo: ":packageInfo",
                     srcFile: ":srcFile",
                     specFile: ":specFile",
                     packageBaseDir: ":packageBaseDir",
                     implementPrompt: ":implementPrompt",
                     errorPrompt: ":errorPrompt",
+                    npmPackages: [":specLLM.tool.arguments.npmPackages"],
                 },
                 graph: {
                     loop: {
+                        // while: ":isLoop.array",
                         while: ":yarnTest.error",
                     },
                     nodes: {
@@ -167,9 +225,22 @@ const main = async () => {
                             agent: "openAIAgent",
                             inputs: {
                                 system: ":specFile.data",
-                                prompt: "${:implementPrompt}\n\n ${:sourceFile.data}\n\n\n${:errorPrompt}\n\n${:error}",
+                                prompt: "${:implementPrompt}\n\n###ソース###\n\n${:sourceFile.data}\n\n\n###npmは以下が追加さています###\n${:npmPackages.join( )}\n\n###${:errorPrompt}###\n\n${:error}",
+                                // tools: tools_npminstall,
                             },
-                            console: { before: true },
+                            console: { before: true, after: true },
+                        },
+                        yarnAdd: {
+                            agent: "runShellAgent",
+                            if: ":llm.tool.arguments.npmPackages",
+                            inputs: {
+                                command: "yarn add ${:llm.tool.arguments.npmPackages}",
+                                dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+                            },
+                            defaultValue: {},
+                            console: {
+                                before: true, after: true
+                            },
                         },
                         res: {
                             agent: "copyAgent",
@@ -179,6 +250,8 @@ const main = async () => {
                             isResult: true,
                         },
                         writeFile: {
+                            if: ":res.text",
+                            defaultValue: {},
                             agent: "fileWriteAgent",
                             inputs: {
                                 file: ":srcFile.path",
@@ -189,27 +262,50 @@ const main = async () => {
                                 outputType: "text",
                             },
                         },
-                        yarnInstall: {
-                            agent: "runShellAgent",
-                            params: {},
-                            inputs: {
-                                command: "yarn install",
-                                waiting: ":writeFile.result",
-                                dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
-                            },
-                        },
                         yarnTest: {
                             agent: "runShellAgent",
                             params: {},
                             inputs: {
                                 command: "yarn run test",
-                                waiting: ":yarnInstall",
+                                waiting: ":writeFile",
                                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
                             },
+                            console: {
+                                after: true
+                            },
                         },
+                        /*
+                        isLoop: {
+                          agent: "copyAgent",
+                          inputs: { array: [":yarnTest.error", ":yarnAdd"]}
+                          },
+                        */
                     },
                 },
             },
+            final: {
+                agent: "runShellAgent",
+                params: {},
+                inputs: {
+                    command: "yarn run build && yarn run doc",
+                    dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+                    waiting: ":programmer",
+                },
+            },
+            /*
+            writeSpec: {
+              agent: "fileWriteAgent",
+              inputs: {
+                file: "spec.txt",
+                waiting: ":programmer",
+                text: ":specFileReader.array.$0",
+              },
+              params: {
+                baseDir: "${:packageBaseDir}/${:packageInfo.kebabCase}",
+                outputType: "text",
+              },
+            },
+            */
         },
     };
     const graph = new graphai_1.GraphAI(graphData, {
@@ -222,9 +318,10 @@ const main = async () => {
         stringCaseVariantsAgent: vanilla_1.stringCaseVariantsAgent,
         pathUtilsAgent: vanilla_node_agents_1.pathUtilsAgent,
     });
-    graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
     graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
-    graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください");
+    graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
+    // graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
+    graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
     graph.injectValue("implementPrompt", "以下のソースを仕様に従って変更して");
     graph.injectValue("errorPrompt", "エラー情報");
     const result = (await graph.run());
