@@ -1,6 +1,6 @@
 {
   "name": "@graphai/shell_utilty_agent",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "shell utilty agent",
   "main": "lib/index.js",
   "files": [
@@ -23,7 +23,7 @@
     "@receptron/test_utils": "^0.2.2",
     "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
-    "graphai": "^0.6.3",
+    "graphai": "^0.6.4",
     "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

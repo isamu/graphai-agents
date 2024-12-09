@@ -3,23 +3,19 @@ import { AgentFunction, AgentFunctionInfo } from "graphai";
 import { exec } from "child_process";
 import * as path from "node:path";
 
-export const runShellCommand = (command: string, path?: string) => {
-  // console.log(command, path);
+export const runShellCommand = (command: string, path?: string): Promise<{text?: string | unknown; error?: unknown, stderr?: unknown  }> => {
   return new Promise((resolve, reject) => {
-    // const exec = require("child_process").exec;
     exec(command, { cwd: path ?? process.cwd() }, function (error: any, stdout: any, stderr: any) {
       if (error) {
-        reject([error, stdout].join("\n"));
-      } else if (stderr) {
-        reject([stderr, stdout].join("\n"));
+        reject(error);
       } else if (stdout) {
-        resolve(stdout);
+        resolve({text: stdout, stderr});
       }
     });
   });
 };
 
-export const runShellAgent: AgentFunction<null, { text?: string | unknown; error?: unknown }, { command: string; baseDir?: string; dirs?: string[] }> = async ({
+export const runShellAgent: AgentFunction<null, { text?: string | unknown; error?: unknown, stderr?: unknown }, { command: string; baseDir?: string; dirs?: string[] }> = async ({
   namedInputs,
 }) => {
   const { baseDir, dirs, command } = namedInputs;
@@ -34,18 +30,14 @@ export const runShellAgent: AgentFunction<null, { text?: string | unknown; error
 
   try {
     const result = await runShellCommand(command, dir);
-    return {
-      text: result,
-    };
+    return result;
   } catch (error) {
     if (error instanceof Error) {
       return {
         error: error.message,
       };
     }
-    return {
-      error,
-    };
+    return { error };
   }
 };
 
@@ -60,6 +52,7 @@ const runShellAgentInfo: AgentFunctionInfo = {
       inputs: { command: "echo 1", baseDir: "./" },
       result: {
         text: "1\n",
+        stderr: "",
       },
     },
   ],

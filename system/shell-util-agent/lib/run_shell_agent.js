@@ -37,18 +37,13 @@ exports.runShellAgent = exports.runShellCommand = void 0;
 const child_process_1 = require("child_process");
 const path = __importStar(require("node:path"));
 const runShellCommand = (command, path) => {
-    // console.log(command, path);
     return new Promise((resolve, reject) => {
-        // const exec = require("child_process").exec;
         (0, child_process_1.exec)(command, { cwd: path ?? process.cwd() }, function (error, stdout, stderr) {
             if (error) {
-                reject([error, stdout].join("\n"));
-            }
-            else if (stderr) {
-                reject([stderr, stdout].join("\n"));
+                reject(error);
             }
             else if (stdout) {
-                resolve(stdout);
+                resolve({ text: stdout, stderr });
             }
         });
     });
@@ -66,9 +61,7 @@ const runShellAgent = async ({ namedInputs, }) => {
     })();
     try {
         const result = await (0, exports.runShellCommand)(command, dir);
-        return {
-            text: result,
-        };
+        return result;
     }
     catch (error) {
         if (error instanceof Error) {
@@ -76,9 +69,7 @@ const runShellAgent = async ({ namedInputs, }) => {
                 error: error.message,
             };
         }
-        return {
-            error,
-        };
+        return { error };
     }
 };
 exports.runShellAgent = runShellAgent;
@@ -92,6 +83,7 @@ const runShellAgentInfo = {
             inputs: { command: "echo 1", baseDir: "./" },
             result: {
                 text: "1\n",
+                stderr: "",
             },
         },
     ],
