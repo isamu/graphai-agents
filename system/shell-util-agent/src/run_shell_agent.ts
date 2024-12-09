@@ -7,7 +7,7 @@ export const runShellCommand = (command: string, path?: string): Promise<{ text?
   return new Promise((resolve, reject) => {
     exec(command, { cwd: path ?? process.cwd() }, function (error: any, stdout: any, stderr: any) {
       if (error) {
-        reject({error, stderr, stdout});
+        reject({ error, stderr, stdout });
       } else if (stdout) {
         resolve({ text: stdout, stderr });
       }
@@ -39,7 +39,7 @@ export const runShellAgent: AgentFunction<
         error: err.message,
       };
     }
-    const { error, stderr, stdout } = err as { error: unknown, stderr: unknown, stdout: unknown};
+    const { error, stderr, stdout } = err as { error: unknown; stderr: unknown; stdout: unknown };
     return { error, stderr, stdout };
   }
 };

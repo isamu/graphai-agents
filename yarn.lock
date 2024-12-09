@@ -90,10 +90,10 @@
     "@graphai/llm_utils" "^0.0.2"
     openai "^4.75.0"
 
-"@graphai/shell_utilty_agent@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@graphai/shell_utilty_agent/-/shell_utilty_agent-0.0.3.tgz#7cc8a6d4e436bfa4433de7b604863e4f3bd60afe"
-  integrity sha512-SutHkT5sX6Pdse0NFDtuhxDv9Fd8rWZk4FBJ0g8kFVI1Z8Z9iDxQtwUXGytVzJvc2xYRYAMql5V2vhkwZTLZag==
+"@graphai/shell_utilty_agent@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@graphai/shell_utilty_agent/-/shell_utilty_agent-0.0.4.tgz#d9cf6dd4674cb89596b177c5673887abc8a232dd"
+  integrity sha512-/LZe7DkSDXK61wpkAe3jUFCoUEYfedfH8xe95OyIZxcdTURrgh4gDuHTHM1hm8sRE9193KDNPbjYloTYvQ3N3w==
 
 "@graphai/vanilla@^0.2.5":
   version "0.2.5"
@@ -948,11 +948,6 @@ globals@^14.0.0:
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-14.0.0.tgz#898d7413c29babcf6bafe56fcadded858ada724e"
   integrity sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==
-
-graphai@^0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/graphai/-/graphai-0.6.4.tgz#608c43fcd7b314629712a26f5eaec0dc73733ed2"
-  integrity sha512-gbZPWcX1eFtu+GKvWrc1rTSsv0RUzjNc2hUNKL/9FyIMvErtV/YFJ+eqtgzC8pQIX+gA2ihOiZaNvW+3onKBmw==
 
 graphai@^0.6.4:
   version "0.6.4"
