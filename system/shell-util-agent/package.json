@@ -23,7 +23,7 @@
     "@receptron/test_utils": "^0.2.2",
     "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
-    "graphai": "^0.6.2",
+    "graphai": "^0.6.3",
     "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
