@@ -40,7 +40,7 @@ const runShellCommand = (command, path) => {
     return new Promise((resolve, reject) => {
         (0, child_process_1.exec)(command, { cwd: path ?? process.cwd() }, function (error, stdout, stderr) {
             if (error) {
-                reject(error);
+                reject({ error, stderr, stdout });
             }
             else if (stdout) {
                 resolve({ text: stdout, stderr });
@@ -63,13 +63,14 @@ const runShellAgent = async ({ namedInputs, }) => {
         const result = await (0, exports.runShellCommand)(command, dir);
         return result;
     }
-    catch (error) {
-        if (error instanceof Error) {
+    catch (err) {
+        if (err instanceof Error) {
             return {
-                error: error.message,
+                error: err.message,
             };
         }
-        return { error };
+        const { error, stderr, stdout } = err;
+        return { error, stderr, stdout };
     }
 };
 exports.runShellAgent = runShellAgent;
