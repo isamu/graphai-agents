@@ -180,7 +180,8 @@ const main = async () => {
                     wait: ":createSkeleton",
                 },
                 console: {
-                    before: true, after: true
+                    before: true,
+                    after: true,
                 },
             },
             srcFile: {
@@ -207,7 +208,7 @@ const main = async () => {
                     },
                     nodes: {
                         npmPackages: {
-                            update: ":npmPackagesStack.array"
+                            update: ":npmPackagesStack.array",
                         },
                         error: {
                             value: "",
@@ -274,17 +275,17 @@ const main = async () => {
                                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
                             },
                             console: {
-                                after: true
+                                after: true,
                             },
                         },
                         npmPackagesStack: {
                             agent: "pushAgent",
                             inputs: {
                                 array: ":npmPackages",
-                                items: [":llm.tool.arguments.npmPackages"]
+                                items: [":llm.tool.arguments.npmPackages"],
                             },
                             console: {
-                                after: true
+                                after: true,
                             },
                         },
                         /*
