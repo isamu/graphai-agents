@@ -29,9 +29,9 @@ const main = async () => {
           before: true,
         },
       },
-    }
+    },
   };
-  
+
   const graph = new GraphAI(graphData, { ttsNijivoiceAgent, fileWriteAgent });
   graph.injectValue("fileDir", path.resolve(__dirname));
   const result = (await graph.run()) as any;
