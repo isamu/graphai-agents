@@ -76,25 +76,27 @@ const tools = [
         },
     },
 ];
+/*
 const tools_npminstall = [
-    {
-        type: "function",
-        function: {
-            name: "installNpm",
-            description: "install npm package",
-            parameters: {
-                type: "object",
-                properties: {
-                    npmPackages: {
-                        type: "string",
-                        description: "list of npm package if you need. Separate packages with spaces. ",
-                    },
-                },
-                required: ["npmPackages"],
-            },
+  {
+    type: "function",
+    function: {
+      name: "installNpm",
+      description: "install npm package",
+      parameters: {
+        type: "object",
+        properties: {
+          npmPackages: {
+            type: "string",
+            description: "list of npm package if you need. Separate packages with spaces. ",
+          },
         },
+        required: ["npmPackages"],
+      },
     },
+  },
 ];
+*/
 const main = async () => {
     const graphData = {
         version: 0.5,
