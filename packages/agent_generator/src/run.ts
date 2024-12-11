@@ -44,7 +44,7 @@ const tools = [
     },
   },
 ];
-
+/*
 const tools_npminstall = [
   {
     type: "function",
@@ -64,7 +64,7 @@ const tools_npminstall = [
     },
   },
 ];
-
+*/
 
 const main = async () => {
   const graphData = {
