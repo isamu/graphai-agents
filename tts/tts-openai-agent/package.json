@@ -1,5 +1,5 @@
 {
-  "name": "tts_openai_agent",
+  "name": "@graphai/tts_openai_agent",
   "version": "0.0.1",
   "description": "OpenAI TTS agent",
   "main": "lib/index.js",
