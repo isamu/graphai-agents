@@ -7,26 +7,26 @@ export const ttsNijivoiceAgent: AgentFunction = async ({ params, namedInputs }) 
   const { voiceId, text } = namedInputs;
   const url = `https://api.nijivoice.com/api/platform/v1/voice-actors/${voiceId}/generate-voice`;
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
       "x-api-key": apiKey ?? nijovoiceApiKey,
-      accept: 'application/json',
-      'content-type': 'application/json'
+      accept: "application/json",
+      "content-type": "application/json",
     },
     body: JSON.stringify({
-      format: 'mp3',
-      speed: '1.0',
+      format: "mp3",
+      speed: "1.0",
       script: text,
-    })
+    }),
   };
 
   try {
-    const voiceRes = await fetch(url, options)
+    const voiceRes = await fetch(url, options);
     const voiceJson: any = await voiceRes.json();
     const audioRes = await fetch(voiceJson.generatedVoice.audioFileDownloadUrl);
     const buffer = Buffer.from(await audioRes.arrayBuffer());
     return { buffer, generatedVoice: voiceJson.generatedVoice };
-  } catch(e) {
+  } catch (e) {
     console.error(e);
   }
 };
