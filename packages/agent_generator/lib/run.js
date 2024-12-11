@@ -262,7 +262,6 @@ const main = async () => {
                             },
                             params: {
                                 baseDir: ":packageBaseDir",
-                                outputType: "text",
                             },
                             console: {
                                 before: true,
