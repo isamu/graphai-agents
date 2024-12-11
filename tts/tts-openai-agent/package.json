@@ -1,0 +1,34 @@
+{
+  "name": "@graphai/tts_openai_agent",
+  "version": "0.0.1",
+  "description": "OpenAI TTS agent",
+  "main": "lib/index.js",
+  "files": [
+    "./lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "eslint": "eslint src --fix",
+    "format": "prettier --write '{src,tests}/**/*.ts'",
+    "doc": "npx agentdoc",
+    "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
+    "test": "node --test --require ts-node/register ./tests/test_*.ts",
+    "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
+  },
+  "author": "isamu arimoto",
+  "license": "MIT",
+  "devDependencies": {
+    "@graphai/vanilla": "^0.2.5",
+    "@receptron/agentdoc": "^0.0.6",
+    "@receptron/test_utils": "^0.2.2",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "graphai": "^0.6.5",
+    "prettier": "^3.4.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.17.0"
+  },
+  "dependencies": {}
+}

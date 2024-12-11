@@ -124,7 +124,7 @@ const main = async () => {
         agent: "runShellAgent",
         inputs: {
           command:
-          "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description '${:specLLM.tool.arguments.description}' --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
+            "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description '${:specLLM.tool.arguments.description}' --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
           baseDir: ":packageBaseDir",
         },
       },
@@ -152,7 +152,8 @@ const main = async () => {
           wait: ":createSkeleton",
         },
         console: {
-          before: true, after: true
+          before: true,
+          after: true,
         },
       },
       srcFile: {
@@ -179,7 +180,7 @@ const main = async () => {
           },
           nodes: {
             npmPackages: {
-              update: ":npmPackagesStack.array"
+              update: ":npmPackagesStack.array",
             },
             error: {
               value: "",
@@ -199,7 +200,8 @@ const main = async () => {
               agent: "openAIAgent",
               inputs: {
                 system: ":specFile.data",
-                prompt: "${:implementPrompt}\n\n###ソース###\n\n${:sourceFile.data}\n\n\n###npmは以下が追加さています###\n${:npmPackages.join(,)}\n\n###${:errorPrompt}###\n\n${:error}",
+                prompt:
+                  "${:implementPrompt}\n\n###ソース###\n\n${:sourceFile.data}\n\n\n###npmは以下が追加さています###\n${:npmPackages.join(,)}\n\n###${:errorPrompt}###\n\n${:error}",
                 // model: "o1-mini",
                 // tools: tools_npminstall,
               },
@@ -246,19 +248,18 @@ const main = async () => {
                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
               },
               console: {
-                after: true
+                after: true,
               },
             },
             npmPackagesStack: {
               agent: "pushAgent",
               inputs: {
                 array: ":npmPackages",
-                items: [":llm.tool.arguments.npmPackages"]
+                items: [":llm.tool.arguments.npmPackages"],
               },
               console: {
-                after: true
+                after: true,
               },
-
             },
             /*
             isLoop: {
@@ -309,7 +310,10 @@ const main = async () => {
   graph.injectValue("templateBaseDir", path.resolve(__dirname, ".."));
   // graph.injectValue("packageBaseDir", "/Users/isamu/ss/llm/ai-generated-graphai-agents");
   graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
-  graph.injectValue("specPrompt", "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。");
+  graph.injectValue(
+    "specPrompt",
+    "以下の仕様を元に必要な情報を教えて下さい。結果はgenerate_packageで返してください。npmパッケージが必要な場合はそれも一覧で返してください。",
+  );
   graph.injectValue("packageBaseDir", path.resolve(__dirname, "..", "tmp"));
   graph.injectValue(
     "specPrompt",

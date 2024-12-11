@@ -49,7 +49,7 @@ const runShellCommand = (command, path) => {
     });
 };
 exports.runShellCommand = runShellCommand;
-const runShellAgent = async ({ namedInputs, }) => {
+const runShellAgent = async ({ namedInputs }) => {
     const { baseDir, dirs, command } = namedInputs;
     const dir = (() => {
         if (dirs) {
