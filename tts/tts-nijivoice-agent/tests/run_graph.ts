@@ -1,3 +1,6 @@
+// set .env
+//  NIJIVOICE_API_KEY=xxxx
+// node --test --require ts-node/register ./tests/run_graph.ts
 import "dotenv/config";
 import { GraphAI } from "graphai";
 import { ttsNijivoiceAgent } from "../src";
