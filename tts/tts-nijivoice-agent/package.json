@@ -1,0 +1,23 @@
+{
+  "name": "@graphai/tts_nijivoice_agent",
+  "version": "0.0.1",
+  "description": "nijivoice TTS agent",
+  "main": "lib/index.js",
+  "files": [
+    "./lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "eslint": "eslint src --fix",
+    "format": "prettier --write '{src,tests}/**/*.ts'",
+    "doc": "npx agentdoc",
+    "test_run": "node --test --require ts-node/register ./tests/run_*.ts",
+    "test": "node --test --require ts-node/register ./tests/test_*.ts",
+    "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
+  },
+  "author": "isamu arimoto",
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "dependencies": {}
+}
