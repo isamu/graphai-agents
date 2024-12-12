@@ -3,7 +3,7 @@ import { AgentFunction, AgentFunctionInfo } from "graphai";
 const nijovoiceApiKey = process.env.NIJIVOICE_API_KEY ?? "";
 
 export const ttsNijivoiceAgent: AgentFunction = async ({ params, namedInputs }) => {
-  const { apiKey } = params;
+  const { apiKey, throwError } = params;
   const { voiceId, text } = namedInputs;
   const url = `https://api.nijivoice.com/api/platform/v1/voice-actors/${voiceId}/generate-voice`;
   const options = {
@@ -23,11 +23,26 @@ export const ttsNijivoiceAgent: AgentFunction = async ({ params, namedInputs }) 
   try {
     const voiceRes = await fetch(url, options);
     const voiceJson: any = await voiceRes.json();
-    const audioRes = await fetch(voiceJson.generatedVoice.audioFileDownloadUrl);
-    const buffer = Buffer.from(await audioRes.arrayBuffer());
-    return { buffer, generatedVoice: voiceJson.generatedVoice };
+    if (voiceJson && voiceJson.generatedVoice && voiceJson.generatedVoice.audioFileDownloadUrl) {
+      const audioRes = await fetch(voiceJson.generatedVoice.audioFileDownloadUrl);
+      const buffer = Buffer.from(await audioRes.arrayBuffer());
+      return { buffer, generatedVoice: voiceJson.generatedVoice };
+    }
+    if (throwError) {
+      console.error(voiceJson);
+      throw new Error("TTS Nijivoice Error");
+    }
+    return {
+      error: voiceJson
+    };
   } catch (e) {
-    console.error(e);
+    if (throwError) {
+      console.error(e);
+      throw new Error("TTS Nijivoice Error");
+    }
+    return {
+      error: e
+    };
   }
 };
 
