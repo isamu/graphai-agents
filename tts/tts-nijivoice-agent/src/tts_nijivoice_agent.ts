@@ -33,7 +33,7 @@ export const ttsNijivoiceAgent: AgentFunction = async ({ params, namedInputs }) 
       throw new Error("TTS Nijivoice Error");
     }
     return {
-      error: voiceJson
+      error: voiceJson,
     };
   } catch (e) {
     if (throwError) {
@@ -41,7 +41,7 @@ export const ttsNijivoiceAgent: AgentFunction = async ({ params, namedInputs }) 
       throw new Error("TTS Nijivoice Error");
     }
     return {
-      error: e
+      error: e,
     };
   }
 };
