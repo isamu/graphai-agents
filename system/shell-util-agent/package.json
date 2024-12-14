@@ -18,17 +18,17 @@
   "author": "isamu arimoto",
   "license": "MIT",
   "devDependencies": {
-    "@graphai/vanilla": "^0.2.5",
+    "@graphai/vanilla": "^0.2.6",
     "@receptron/agentdoc": "^0.0.6",
     "@receptron/test_utils": "^0.2.2",
-    "@types/node": "^22.10.1",
-    "eslint": "^9.16.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
     "graphai": "^0.6.4",
     "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.17.0"
+    "typescript-eslint": "^8.18.0"
   },
   "dependencies": {}
 }

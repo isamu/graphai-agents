@@ -27,12 +27,15 @@
     "url": "https://github.com/isamu/graphai-agents/issues"
   },
   "homepage": "https://github.com/isamu/graphai-agents#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "@graphai/vanilla": "^0.2.6",
+    "@graphai/vanilla_node_agents": "^0.2.6"
+  },
   "dependencies": {
     "@graphai/openai_agent": "^0.2.0",
-    "@graphai/shell_utilty_agent": "^0.0.4",
-    "@graphai/vanilla": "^0.2.5",
-    "@graphai/vanilla_node_agents": "^0.2.5",
-    "graphai": "^0.6.4"
+    "@graphai/shell_utilty_agent": "^0.1.0",
+    "@graphai/vanilla": "^0.2.6",
+    "@graphai/vanilla_node_agents": "^0.2.6",
+    "graphai": "^0.6.6"
   }
 }
