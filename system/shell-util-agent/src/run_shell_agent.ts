@@ -8,27 +8,26 @@ export const runShellCommand = (commands: string[], path?: string): Promise<{ te
     throw new Error("runShellAgent error: command must be string[]");
   }
   return new Promise((resolve, reject) => {
-    const [command, args] = [commands[0] , commands.slice(1)];
+    const [command, args] = [commands[0], commands.slice(1)];
     const results: string[] = [];
     const stderrs: string[] = [];
     const child = spawn(command, args, { cwd: path ?? process.cwd() });
 
-    child.stdout.on('data', (data: string) => {
+    child.stdout.on("data", (data: string) => {
       results.push(data);
     });
-    
-    child.stderr.on('data', (data: string) => {
+
+    child.stderr.on("data", (data: string) => {
       stderrs.push(data);
     });
 
-    child.stderr.on('data', (data) => {
-      reject({error: data, stdout: results.join(""), stderr: stderrs.join("")});
+    child.stderr.on("data", (data) => {
+      reject({ error: data, stdout: results.join(""), stderr: stderrs.join("") });
     });
-    
-    child.on('close', () => {
-      resolve({ text: results.join(""), stderr: stderrs.join("")});
+
+    child.on("close", () => {
+      resolve({ text: results.join(""), stderr: stderrs.join("") });
     });
-    
   });
 };
 
