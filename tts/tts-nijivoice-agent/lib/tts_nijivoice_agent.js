@@ -32,7 +32,7 @@ const ttsNijivoiceAgent = async ({ params, namedInputs }) => {
             throw new Error("TTS Nijivoice Error");
         }
         return {
-            error: voiceJson
+            error: voiceJson,
         };
     }
     catch (e) {
@@ -41,7 +41,7 @@ const ttsNijivoiceAgent = async ({ params, namedInputs }) => {
             throw new Error("TTS Nijivoice Error");
         }
         return {
-            error: e
+            error: e,
         };
     }
 };
