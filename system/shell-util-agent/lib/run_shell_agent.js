@@ -36,21 +36,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.runShellAgent = exports.runShellCommand = void 0;
 const child_process_1 = require("child_process");
 const path = __importStar(require("node:path"));
-const runShellCommand = (command, path) => {
+const runShellCommand = (commands, path) => {
+    if (!Array.isArray(commands)) {
+        throw new Error("runShellAgent error: command must be string[]");
+    }
     return new Promise((resolve, reject) => {
-        (0, child_process_1.exec)(command, { cwd: path ?? process.cwd() }, function (error, stdout, stderr) {
-            if (error) {
-                reject({ error, stderr, stdout });
-            }
-            else if (stdout) {
-                resolve({ text: stdout, stderr });
-            }
+        const [command, args] = [commands[0], commands.slice(1)];
+        const results = [];
+        const stderrs = [];
+        const child = (0, child_process_1.spawn)(command, args, { cwd: path ?? process.cwd() });
+        child.stdout.on('data', (data) => {
+            results.push(data);
+        });
+        child.stderr.on('data', (data) => {
+            stderrs.push(data);
+        });
+        child.stderr.on('data', (data) => {
+            reject({ error: data, stdout: results.join(""), stderr: stderrs.join("") });
+        });
+        child.on('close', () => {
+            resolve({ text: results.join(""), stderr: stderrs.join("") });
         });
     });
 };
 exports.runShellCommand = runShellCommand;
 const runShellAgent = async ({ namedInputs }) => {
-    const { baseDir, dirs, command } = namedInputs;
+    const { baseDir, dirs, commands } = namedInputs;
     const dir = (() => {
         if (dirs) {
             return path.resolve(...dirs);
@@ -60,7 +71,7 @@ const runShellAgent = async ({ namedInputs }) => {
         }
     })();
     try {
-        const result = await (0, exports.runShellCommand)(command, dir);
+        const result = await (0, exports.runShellCommand)(commands, dir);
         return result;
     }
     catch (err) {
@@ -81,7 +92,7 @@ const runShellAgentInfo = {
     samples: [
         {
             params: {},
-            inputs: { command: "echo 1", baseDir: "./" },
+            inputs: { commands: ["echo", "1"], baseDir: "./" },
             result: {
                 text: "1\n",
                 stderr: "",

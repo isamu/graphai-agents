@@ -1,5 +1,5 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
-export declare const runShellCommand: (command: string, path?: string) => Promise<{
+export declare const runShellCommand: (commands: string[], path?: string) => Promise<{
     text?: string | unknown;
     error?: unknown;
     stderr?: unknown;
@@ -9,7 +9,7 @@ export declare const runShellAgent: AgentFunction<null, {
     error?: unknown;
     stderr?: unknown;
 }, {
-    command: string;
+    commands: string[];
     baseDir?: string;
     dirs?: string[];
 }>;

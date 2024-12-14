@@ -1,26 +1,43 @@
 import { AgentFunction, AgentFunctionInfo } from "graphai";
 
-import { exec } from "child_process";
+import { exec, spawn } from "child_process";
 import * as path from "node:path";
 
-export const runShellCommand = (command: string, path?: string): Promise<{ text?: string | unknown; error?: unknown; stderr?: unknown }> => {
+export const runShellCommand = (commands: string[], path?: string): Promise<{ text?: string | unknown; error?: unknown; stderr?: unknown }> => {
+  if (!Array.isArray(commands)) {
+    throw new Error("runShellAgent error: command must be string[]");
+  }
   return new Promise((resolve, reject) => {
-    exec(command, { cwd: path ?? process.cwd() }, function (error: any, stdout: any, stderr: any) {
-      if (error) {
-        reject({ error, stderr, stdout });
-      } else if (stdout) {
-        resolve({ text: stdout, stderr });
-      }
+    const [command, args] = [commands[0] , commands.slice(1)];
+    const results: string[] = [];
+    const stderrs: string[] = [];
+    const child = spawn(command, args, { cwd: path ?? process.cwd() });
+
+    child.stdout.on('data', (data: string) => {
+      results.push(data);
     });
+    
+    child.stderr.on('data', (data: string) => {
+      stderrs.push(data);
+    });
+
+    child.stderr.on('data', (data) => {
+      reject({error: data, stdout: results.join(""), stderr: stderrs.join("")});
+    });
+    
+    child.on('close', () => {
+      resolve({ text: results.join(""), stderr: stderrs.join("")});
+    });
+    
   });
 };
 
 export const runShellAgent: AgentFunction<
   null,
   { text?: string | unknown; error?: unknown; stderr?: unknown },
-  { command: string; baseDir?: string; dirs?: string[] }
+  { commands: string[]; baseDir?: string; dirs?: string[] }
 > = async ({ namedInputs }) => {
-  const { baseDir, dirs, command } = namedInputs;
+  const { baseDir, dirs, commands } = namedInputs;
   const dir = (() => {
     if (dirs) {
       return path.resolve(...dirs);
@@ -31,7 +48,7 @@ export const runShellAgent: AgentFunction<
   })();
 
   try {
-    const result = await runShellCommand(command, dir);
+    const result = await runShellCommand(commands, dir);
     return result;
   } catch (err) {
     if (err instanceof Error) {
@@ -52,7 +69,7 @@ const runShellAgentInfo: AgentFunctionInfo = {
   samples: [
     {
       params: {},
-      inputs: { command: "echo 1", baseDir: "./" },
+      inputs: { commands: ["echo", "1"], baseDir: "./" },
       result: {
         text: "1\n",
         stderr: "",
