@@ -45,16 +45,16 @@ const runShellCommand = (commands, path) => {
         const results = [];
         const stderrs = [];
         const child = (0, child_process_1.spawn)(command, args, { cwd: path ?? process.cwd() });
-        child.stdout.on('data', (data) => {
+        child.stdout.on("data", (data) => {
             results.push(data);
         });
-        child.stderr.on('data', (data) => {
+        child.stderr.on("data", (data) => {
             stderrs.push(data);
         });
-        child.stderr.on('data', (data) => {
+        child.stderr.on("data", (data) => {
             reject({ error: data, stdout: results.join(""), stderr: stderrs.join("") });
         });
-        child.on('close', () => {
+        child.on("close", () => {
             resolve({ text: results.join(""), stderr: stderrs.join("") });
         });
     });
