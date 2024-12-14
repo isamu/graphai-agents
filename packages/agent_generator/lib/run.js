@@ -154,7 +154,9 @@ const main = async () => {
             createSkeleton: {
                 agent: "runShellAgent",
                 inputs: {
-                    command: "npm create graphai-agent@latest  -- -c  --agentName ${:packageInfo.kebabCase} --description '${:specLLM.tool.arguments.description}' --author me --license MIT --category ${:specLLM.tool.arguments.category} --outdir ${:packageBaseDir}",
+                    commands: [
+                        "npm", "create", "graphai-agent@latest", "--", "-c", "--agentName", ":packageInfo.kebabCase", "--description", ":specLLM.tool.arguments.description", "--author", "me", "--license", "MIT", "--category", ":specLLM.tool.arguments.category", "--outdir", ":packageBaseDir",
+                    ],
                     baseDir: ":packageBaseDir",
                 },
             },
@@ -162,8 +164,9 @@ const main = async () => {
                 agent: "runShellAgent",
                 params: {},
                 inputs: {
-                    command: "yarn install",
+                    commands: ["yarn", "install"],
                     dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+                    waiting: ":createSkeleton"
                 },
             },
             packageDir: {
@@ -177,13 +180,9 @@ const main = async () => {
                 if: ":specLLM.tool.arguments.npmPackages",
                 defaultValue: {},
                 inputs: {
-                    command: "yarn add ${:specLLM.tool.arguments.npmPackages}",
+                    commands: ["yarn", "add", "${:specLLM.tool.arguments.npmPackages}"],
                     baseDir: ":packageDir.text",
-                    wait: ":createSkeleton",
-                },
-                console: {
-                    before: true,
-                    after: true,
+                    wait: ":yarnInstall",
                 },
             },
             srcFile: {
@@ -240,7 +239,7 @@ const main = async () => {
                             agent: "runShellAgent",
                             if: ":llm.tool.arguments.npmPackages",
                             inputs: {
-                                command: "yarn add ${:llm.tool.arguments.npmPackages}",
+                                command: ["yarn", "add", "${:llm.tool.arguments.npmPackages}"],
                                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
                             },
                             defaultValue: {},
@@ -271,7 +270,7 @@ const main = async () => {
                             agent: "runShellAgent",
                             params: {},
                             inputs: {
-                                command: "yarn run test",
+                                commands: ["yarn", "run", "test"],
                                 waiting: ":writeFile",
                                 dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
                             },
@@ -302,7 +301,16 @@ const main = async () => {
                 agent: "runShellAgent",
                 params: {},
                 inputs: {
-                    command: "yarn run build && yarn run doc",
+                    commands: ["yarn", "run", "build"], // , "&&", "yarn", "run", "doc"
+                    dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
+                    waiting: ":programmer",
+                },
+            },
+            final2: {
+                agent: "runShellAgent",
+                params: {},
+                inputs: {
+                    commands: ["yarn", "run", "doc"],
                     dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
                     waiting: ":programmer",
                 },
