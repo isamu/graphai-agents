@@ -155,7 +155,23 @@ const main = async () => {
                 agent: "runShellAgent",
                 inputs: {
                     commands: [
-                        "npm", "create", "graphai-agent@latest", "--", "-c", "--agentName", ":packageInfo.kebabCase", "--description", ":specLLM.tool.arguments.description", "--author", "me", "--license", "MIT", "--category", ":specLLM.tool.arguments.category", "--outdir", ":packageBaseDir",
+                        "npm",
+                        "create",
+                        "graphai-agent@latest",
+                        "--",
+                        "-c",
+                        "--agentName",
+                        ":packageInfo.kebabCase",
+                        "--description",
+                        ":specLLM.tool.arguments.description",
+                        "--author",
+                        "me",
+                        "--license",
+                        "MIT",
+                        "--category",
+                        ":specLLM.tool.arguments.category",
+                        "--outdir",
+                        ":packageBaseDir",
                     ],
                     baseDir: ":packageBaseDir",
                 },
@@ -166,7 +182,7 @@ const main = async () => {
                 inputs: {
                     commands: ["yarn", "install"],
                     dirs: [":packageBaseDir", ":packageInfo.kebabCase"],
-                    waiting: ":createSkeleton"
+                    waiting: ":createSkeleton",
                 },
             },
             packageDir: {
