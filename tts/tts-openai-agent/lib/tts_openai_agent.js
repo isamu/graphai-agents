@@ -39,5 +39,6 @@ const ttsOpenaiAgentInfo = {
     author: "isamu arimoto",
     repository: "https://github.com/isamu/graphai-agents/tts/tts-openai-agent/",
     license: "MIT",
+    environmentVariables: ["OPENAI_API_KEY"],
 };
 exports.default = ttsOpenaiAgentInfo;
