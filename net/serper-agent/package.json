@@ -1,5 +1,5 @@
 {
-  "name": "serper_agent",
+  "name": "@graphai/serper_agent",
   "version": "0.0.1",
   "description": "serper agent",
   "main": "lib/index.js",
