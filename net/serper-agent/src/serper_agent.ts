@@ -23,7 +23,7 @@ export const serperAgent: AgentFunction = async ({ namedInputs }) => {
     const response = await axios.request(config);
     return response.data;
   } catch (error) {
-    console.log(error);
+    return { error: error.message };
   }
 };
 
