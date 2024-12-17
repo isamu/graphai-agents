@@ -319,7 +319,7 @@ Receptron team
 
 ## Repository
 
-https://github.com/receptron/graphai
+https://github.com/receptron/graphai-agents/tree/main/documents/pdf2text_agent
 
 ## License
 

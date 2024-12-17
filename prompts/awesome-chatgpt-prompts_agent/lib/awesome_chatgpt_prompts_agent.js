@@ -28,7 +28,7 @@ const awesomeChatgptPromptsAgentInfo = {
     description: "awesomeChatgptPrompts Agent",
     category: ["prompt"],
     author: "Receptron team",
-    repository: "https://github.com/receptron/graphai",
+    repository: "https://github.com/receptron/graphai-agents/tree/main/prompts/awesome-chatgpt-prompts_agent",
     license: "MIT",
 };
 exports.default = awesomeChatgptPromptsAgentInfo;

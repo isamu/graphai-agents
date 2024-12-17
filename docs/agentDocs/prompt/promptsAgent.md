@@ -67,7 +67,7 @@ Receptron team
 
 ## Repository
 
-https://github.com/receptron/graphai
+https://github.com/receptron/graphai-agents/tree/main/prompts/prompts
 
 ## License
 
