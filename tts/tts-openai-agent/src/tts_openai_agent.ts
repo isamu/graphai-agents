@@ -32,8 +32,8 @@ const ttsOpenaiAgentInfo: AgentFunctionInfo = {
   samples: [],
   description: "OpenAI TTS agent",
   category: ["tts"],
-  author: "isamu arimoto",
-  repository: "https://github.com/isamu/graphai-agents/tts/tts-openai-agent/",
+  author: "Receptron Team",
+  repository: "https://github.com/receptron/graphai-agents/tree/main/tts/tts-openai-agent",
   license: "MIT",
   environmentVariables: ["OPENAI_API_KEY"],
 };

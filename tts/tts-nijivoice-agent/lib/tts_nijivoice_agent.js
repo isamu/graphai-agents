@@ -53,8 +53,8 @@ const ttsNijivoiceAgentInfo = {
     samples: [],
     description: "TTS nijivoice agent",
     category: ["tts"],
-    author: "isamu arimoto",
-    repository: "https://github.com/receptron/graphai/",
+    author: "Receptron Team",
+    repository: "https://github.com/receptron/graphai-agents/tree/main/tts/tts-nijivoice-agent",
     license: "MIT",
     environmentVariables: ["NIJIVOICE_API_KEY"],
 };
