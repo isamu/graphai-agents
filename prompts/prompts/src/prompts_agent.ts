@@ -28,7 +28,7 @@ const promptsAgentInfo: AgentFunctionInfo = {
   description: "Prompts Agent",
   category: ["prompt"],
   author: "Receptron team",
-  repository: "https://github.com/receptron/graphai",
+  repository: "https://github.com/receptron/graphai-agents/tree/main/prompts/prompts",
   license: "MIT",
 };
 
