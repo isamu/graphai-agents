@@ -16,8 +16,8 @@ const main = async () => {
       },
       tts: {
         agent: "ttsNijivoiceAgent",
-        inputs: { text: "こんにちは", voiceId: "b9277ce3-ba1c-4f6f-9a65-c05ca102ded0" },
-        params: {},
+        inputs: { text: "こんにちは" },
+        params: { voice: "b9277ce3-ba1c-4f6f-9a65-c05ca102ded0" },
       },
       writeFile: {
         agent: "fileWriteAgent",
