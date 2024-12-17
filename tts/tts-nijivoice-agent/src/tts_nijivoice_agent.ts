@@ -56,6 +56,7 @@ const ttsNijivoiceAgentInfo: AgentFunctionInfo = {
   author: "isamu arimoto",
   repository: "https://github.com/receptron/graphai/",
   license: "MIT",
+  environmentVariables: ["NIJIVOICE_API_KEY"],
 };
 
 export default ttsNijivoiceAgentInfo;
