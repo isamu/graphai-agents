@@ -11,9 +11,9 @@ const notionAgentInfo: AgentFunctionInfo = {
 
   samples: [],
   description: "Notion Agent",
-  category: ["notion"],
+  category: ["net"],
   author: "Receptron team",
-  repository: "https://github.com/receptron/graphai",
+  repository: "https://github.com/receptron/graphai-agents/tree/main/net/notion_agent",
   license: "MIT",
 };
 

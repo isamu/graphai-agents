@@ -42,7 +42,7 @@ const arxivAgentInfo: AgentFunctionInfo = {
   description: "Arxiv Agent",
   category: ["net"],
   author: "Receptron team",
-  repository: "https://github.com/receptron/graphai-agents",
+  repository: "https://github.com/receptron/graphai-agents/tree/main/net/arxiv_agent",
   license: "MIT",
 };
 
