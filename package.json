@@ -1,5 +1,5 @@
 {
-  "name": "ts-mono",
+  "name": "graphai-agent-wrapper",
   "version": "0.0.1",
   "description": "",
   "scripts": {
@@ -7,7 +7,8 @@
     "build": "yarn workspaces run build",
     "eslint": "yarn workspaces run eslint",
     "doc": "yarn workspaces run doc",
-    "format": "yarn workspaces run format"
+    "format": "yarn workspaces run format",
+    "monoRepoAgentDoc": "npx tsx src/monoRepoAgentDocs.ts"
   },
   "private": true,
   "repository": {
@@ -31,7 +32,7 @@
   "devDependencies": {
     "@graphai/vanilla": "^0.2.6",
     "@graphai/vanilla_node_agents": "^0.2.6",
-    "@receptron/agentdoc": "^0.0.6",
+    "@receptron/agentdoc": "^0.0.9",
     "@receptron/test_utils": "^0.2.2",
     "@types/node": "^22.10.2",
     "eslint": "^9.17.0",
@@ -39,6 +40,7 @@
     "graphai_agent_utils": "^0.0.1",
     "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.1"
