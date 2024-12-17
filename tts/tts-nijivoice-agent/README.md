@@ -1,12 +1,12 @@
 
-# tts_nijivoice_agent for GraphAI
+# @graphai/tts_nijivoice_agent for GraphAI
 
-TTS nijivoice agent
+nijivoice TTS agent
 
 ### Install
 
 ```sh
-yarn add tts_nijivoice_agent
+yarn add @graphai/tts_nijivoice_agent
 ```
 
 
@@ -14,7 +14,7 @@ yarn add tts_nijivoice_agent
 
 ```typescript
 import { GraphAI } from "graphai";
-import { ttsNijivoiceAgent } from "tts_nijivoice_agent";
+import { ttsNijivoiceAgent } from "@graphai/tts_nijivoice_agent";
 
 const agents = { ttsNijivoiceAgent };
 
@@ -26,11 +26,13 @@ const result = await graph.run();
 - ttsNijivoiceAgent - TTS nijivoice agent
 
 ### Input/Output/Params Schema & samples
- - [ttsNijivoiceAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/tts/ttsNijivoiceAgent.md)
+ - [ttsNijivoiceAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/tts/ttsNijivoiceAgent.md)
 
 
 
-
+### Environment Variables
+ - ttsNijivoiceAgent
+   - NIJIVOICE_API_KEY
 
 
 

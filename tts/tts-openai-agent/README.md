@@ -1,12 +1,12 @@
 
-# tts_openai_agent for GraphAI
+# @graphai/tts_openai_agent for GraphAI
 
 OpenAI TTS agent
 
 ### Install
 
 ```sh
-yarn add tts_openai_agent
+yarn add @graphai/tts_openai_agent
 ```
 
 
@@ -14,7 +14,7 @@ yarn add tts_openai_agent
 
 ```typescript
 import { GraphAI } from "graphai";
-import { ttsOpenaiAgent } from "tts_openai_agent";
+import { ttsOpenaiAgent } from "@graphai/tts_openai_agent";
 
 const agents = { ttsOpenaiAgent };
 
@@ -26,11 +26,13 @@ const result = await graph.run();
 - ttsOpenaiAgent - OpenAI TTS agent
 
 ### Input/Output/Params Schema & samples
- - [ttsOpenaiAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/tts/ttsOpenaiAgent.md)
+ - [ttsOpenaiAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/tts/ttsOpenaiAgent.md)
 
 
 
-
+### Environment Variables
+ - ttsOpenaiAgent
+   - OPENAI_API_KEY
 
 
 

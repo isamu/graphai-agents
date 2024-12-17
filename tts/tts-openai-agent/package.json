@@ -6,6 +6,10 @@
   "files": [
     "./lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:receptron/graphai-agents.git"
+  },
   "scripts": {
     "build": "tsc",
     "eslint": "eslint src --fix",
@@ -15,9 +19,13 @@
     "test": "node --test --require ts-node/register ./tests/test_*.ts",
     "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
   },
-  "author": "isamu arimoto",
+  "author": "receptron team",
   "license": "MIT",
   "devDependencies": {
   },
-  "dependencies": {}
+  "dependencies": {},
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  }
 }

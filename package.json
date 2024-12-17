@@ -12,7 +12,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/isamu/ts-mono.git"
+    "url": "git@github.com:receptron/graphai-agents.git"
   },
   "author": "",
   "license": "MIT",
