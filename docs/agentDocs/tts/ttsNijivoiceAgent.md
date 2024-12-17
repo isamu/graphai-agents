@@ -18,11 +18,11 @@ TTS nijivoice agent
 
 ## Author
 
-isamu arimoto
+Receptron Team
 
 ## Repository
 
-https://github.com/receptron/graphai/
+https://github.com/receptron/graphai-agents/tree/main/tts/tts-nijivoice-agent
 
 ## License
 

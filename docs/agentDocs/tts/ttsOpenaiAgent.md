@@ -18,11 +18,11 @@ OpenAI TTS agent
 
 ## Author
 
-isamu arimoto
+Receptron Team
 
 ## Repository
 
-https://github.com/isamu/graphai-agents/tts/tts-openai-agent/
+https://github.com/receptron/graphai-agents/tree/main/tts/tts-openai-agent
 
 ## License
 
