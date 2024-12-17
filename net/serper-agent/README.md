@@ -26,7 +26,7 @@ const result = await graph.run();
 - serperAgent - serper agent
 
 ### Input/Output/Params Schema & samples
- - [serperAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/net/serperAgent.md)
+ - [serperAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/serperAgent.md)
 
 ### Input/Params example
  - serperAgent

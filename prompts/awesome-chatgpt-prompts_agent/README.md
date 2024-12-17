@@ -26,7 +26,7 @@ const result = await graph.run();
 - awesomeChatgptPromptsAgent - awesomeChatgptPrompts Agent
 
 ### Input/Output/Params Schema & samples
- - [awesomeChatgptPromptsAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/prompt/awesomeChatgptPromptsAgent.md)
+ - [awesomeChatgptPromptsAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/prompt/awesomeChatgptPromptsAgent.md)
 
 ### Input/Params example
  - awesomeChatgptPromptsAgent

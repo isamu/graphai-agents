@@ -26,7 +26,7 @@ const result = await graph.run();
 - pdf2textAgent - Pdf2text Agent
 
 ### Input/Output/Params Schema & samples
- - [pdf2textAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/documents/pdf2textAgent.md)
+ - [pdf2textAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/documents/pdf2textAgent.md)
 
 ### Input/Params example
  - pdf2textAgent

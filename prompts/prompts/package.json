@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/isamu/graphai-agents.git"
+    "url": "git+https://github.com/receptron/graphai-agents.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/isamu/graphai-agents/issues"
+    "url": "https://github.com/receptron/graphai-agents/issues"
   },
-  "homepage": "https://github.com/isamu/graphai-agents#readme",
+  "homepage": "https://github.com/receptron/graphai-agents#readme",
   "devDependencies": {},
   "dependencies": {}
 }

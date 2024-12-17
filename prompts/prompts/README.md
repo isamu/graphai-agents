@@ -26,7 +26,7 @@ const result = await graph.run();
 - promptsAgent - Prompts Agent
 
 ### Input/Output/Params Schema & samples
- - [promptsAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/prompt/promptsAgent.md)
+ - [promptsAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/prompt/promptsAgent.md)
 
 ### Input/Params example
  - promptsAgent

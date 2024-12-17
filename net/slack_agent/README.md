@@ -42,7 +42,7 @@ const result = await graph.run();
 - slackAgent - Slack Agent
 
 ### Input/Output/Params Schema & samples
- - [slackAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/messaging/slackAgent.md)
+ - [slackAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/messaging/slackAgent.md)
 
 ### Input/Params example
  - slackAgent

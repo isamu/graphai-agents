@@ -26,7 +26,7 @@ const result = await graph.run();
 - notionAgent - Notion Agent
 
 ### Input/Output/Params Schema & samples
- - [notionAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/notion/notionAgent.md)
+ - [notionAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/notion/notionAgent.md)
 
 
 

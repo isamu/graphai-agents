@@ -26,7 +26,7 @@ const result = await graph.run();
 - arxivAgent - Arxiv Agent
 
 ### Input/Output/Params Schema & samples
- - [arxivAgent](https://github.com/receptron/graphai/blob/main/docs/agentDocs/net/arxivAgent.md)
+ - [arxivAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/arxivAgent.md)
 
 ### Input/Params example
  - arxivAgent

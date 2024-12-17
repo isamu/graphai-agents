@@ -15,6 +15,14 @@
     "test": "node --test --require ts-node/register ./tests/test_*.ts",
     "ci": "yarn run format && yarn run eslint && yarn run test && yarn run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/receptron/graphai-agents.git"
+  },
+  "bugs": {
+    "url": "https://github.com/receptron/graphai-agents/issues"
+  },
+  "homepage": "https://github.com/receptron/graphai-agents#readme",
   "author": "isamu arimoto",
   "license": "MIT",
   "devDependencies": {},
