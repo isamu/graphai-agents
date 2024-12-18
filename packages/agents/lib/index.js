@@ -18,11 +18,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("@graphai/pdf2text_agent"), exports);
 // net
 __exportStar(require("@graphai/arxiv_agent"), exports);
-__exportStar(require("@graphai/notion_agent"), exports);
+// export * from "@graphai/notion_agent";
 __exportStar(require("@graphai/serper_agent"), exports);
 __exportStar(require("@graphai/slack_agent"), exports);
 // packages
-// not export 
+// not export
 // prompt
 __exportStar(require("@graphai/awesome_chatgpt_prompts_agent"), exports);
 __exportStar(require("@graphai/prompts"), exports);
