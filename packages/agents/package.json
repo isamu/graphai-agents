@@ -1,7 +1,7 @@
 {
   "name": "@graphai/extra-agents",
   "version": "0.0.1",
-  "description": "Agents for GraphAI.",
+  "description": "Extra agents for GraphAI.",
   "main": "lib/index.js",
   "files": [
     "./lib"

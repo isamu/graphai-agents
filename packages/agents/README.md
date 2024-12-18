@@ -1,7 +1,7 @@
 
 # @graphai/extra-agents for GraphAI
 
-Agents for GraphAI.
+Extra agents for GraphAI.
 
 ### Install
 
@@ -17,7 +17,6 @@ import { GraphAI } from "graphai";
 import { 
   arxivAgent,
   awesomeChatgptPromptsAgent,
-  notionAgent,
   pdf2textAgent,
   promptsAgent,
   serperAgent,
@@ -29,7 +28,6 @@ import {
 const agents = { 
   arxivAgent,
   awesomeChatgptPromptsAgent,
-  notionAgent,
   pdf2textAgent,
   promptsAgent,
   serperAgent,
@@ -45,7 +43,6 @@ const result = await graph.run();
 ### Agents description
 - arxivAgent - Arxiv Agent
 - awesomeChatgptPromptsAgent - awesomeChatgptPrompts Agent
-- notionAgent - Notion Agent
 - pdf2textAgent - Pdf2text Agent
 - promptsAgent - Prompts Agent
 - serperAgent - serper agent
@@ -56,7 +53,6 @@ const result = await graph.run();
 ### Input/Output/Params Schema & samples
  - [arxivAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/arxivAgent.md)
  - [awesomeChatgptPromptsAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/prompt/awesomeChatgptPromptsAgent.md)
- - [notionAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/notionAgent.md)
  - [pdf2textAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/documents/pdf2textAgent.md)
  - [promptsAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/prompt/promptsAgent.md)
  - [serperAgent](https://github.com/receptron/graphai-agents/blob/main/docs/agentDocs/net/serperAgent.md)
