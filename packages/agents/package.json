@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/receptron/agents"
+    "url": "git+https://github.com/receptron/graphai-agents"
   },
   "author": "Satoshi Nakajima, Isamu Arimoto",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/receptron/agents/issues"
+    "url": "https://github.com/receptron/graphai-agents/issues"
   },
-  "homepage": "https://github.com/receptron/agents/blob/main/packages/agents/README.md",
+  "homepage": "https://github.com/receptron/graphai-agents/blob/main/packages/agents/README.md",
   "dependencies": {
     "@graphai/arxiv_agent": "^0.0.2",
     "@graphai/awesome_chatgpt_prompts_agent": "^0.0.1",
