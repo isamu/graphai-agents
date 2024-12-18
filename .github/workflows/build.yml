@@ -23,6 +23,7 @@ jobs:
         cache: 'npm'
     - run: yarn install
     - run: yarn run build
+    - run: yarn run doc
     - run: yarn run format
     - run: |
         cd prompts/prompts/
