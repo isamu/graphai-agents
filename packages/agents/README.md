@@ -169,6 +169,7 @@ const result = await graph.run();
 ### Related Agent Packages
  - [@graphai/arxiv_agent](https://www.npmjs.com/package/@graphai/arxiv_agent)
  - [@graphai/awesome_chatgpt_prompts_agent](https://www.npmjs.com/package/@graphai/awesome_chatgpt_prompts_agent)
+ - [@graphai/pdf2text_agent](https://www.npmjs.com/package/@graphai/pdf2text_agent)
  - [@graphai/serper_agent](https://www.npmjs.com/package/@graphai/serper_agent)
  - [@graphai/slack_agent](https://www.npmjs.com/package/@graphai/slack_agent)
  - [@graphai/tts_nijivoice_agent](https://www.npmjs.com/package/@graphai/tts_nijivoice_agent)
