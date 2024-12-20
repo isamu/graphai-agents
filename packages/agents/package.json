@@ -1,6 +1,6 @@
 {
   "name": "@graphai/extra-agents",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Extra agents for GraphAI.",
   "main": "lib/index.js",
   "files": [
@@ -28,9 +28,10 @@
   "dependencies": {
     "@graphai/arxiv_agent": "^0.0.2",
     "@graphai/awesome_chatgpt_prompts_agent": "^0.0.1",
+    "@graphai/pdf2text_agent": "^0.2.0",
     "@graphai/prompts": "^0.0.1",
     "@graphai/serper_agent": "^0.0.1",
-    "@graphai/slack_agent": "^0.0.2",
+    "@graphai/slack_agent": "^0.0.3",
     "@graphai/tts_nijivoice_agent": "^0.0.2",
     "@graphai/tts_openai_agent": "^0.0.2"
   },
